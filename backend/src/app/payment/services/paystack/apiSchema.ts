@@ -1,5 +1,4 @@
 import { defineSchema } from "@zayne-labs/callapi/utils";
-import type { AnyString } from "@zayne-labs/toolkit-type-helpers";
 import { z } from "zod";
 
 export const InitializePaymentSchema = z.object({
@@ -50,7 +49,7 @@ export const PaystackInitTransactionBodySchema = z.object({
 	reference: z.string(),
 });
 
-const PaystackTransactionStatusEnum = z.literal([
+const PaystackTransactionStatusSchema = z.enum([
 	"abandoned", // Customer has not completed the transaction
 	"failed", // Transaction failed
 	"ongoing", // Waiting for customer action (OTP/transfer)
@@ -61,7 +60,34 @@ const PaystackTransactionStatusEnum = z.literal([
 	"success", // Transaction successful
 ]);
 
-const PaystackChargeSuccessDataSchema = z.object({
+const ChargeEventSchema = z.enum([
+	"charge.dispute.create", // A dispute was logged against your business
+	"charge.dispute.remind", // A logged dispute has not been resolved
+	"charge.dispute.resolve", // A dispute has been resolved
+	"charge.success", // A successful charge was made
+	"customeridentification.failed", // A customer ID validation has failed
+	"customeridentification.success", // A customer ID validation was successful
+	"dedicatedaccount.assign.failed", // This is sent when a DVA couldn't be created and assigned to a customer
+	"dedicatedaccount.assign.success", // This is sent when a DVA has been successfully created and assigned to a customer
+	"invoice.create", // An invoice has been created for a subscription on your account. This usually happens 3 days before the subscription is due or whenever we send the customer their first pending invoice notification
+	"invoice.payment_failed", // A payment for an invoice failed
+	"invoice.update", // An invoice has been updated. This usually means we were able to charge the customer successfully. You should inspect the invoice object returned and take necessary action
+	"paymentrequest.pending", // A payment request has been sent to a customer
+	"paymentrequest.success", // A payment request has been paid for
+	"refund.failed", // Refund cannot be processed. Your account will be credited with refund amount
+	"refund.pending", // Refund initiated, waiting for response from the processor.
+	"refund.processed", // Refund has successfully been processed by the processor.
+	"refund.processing", // Refund has been received by the processor.
+	"subscription.create", // A subscription has been created
+	"subscription.disable", // A subscription on your account has been disabled
+	"subscription.expiring_cards", // Contains information on all subscriptions with cards that are expiring that month. Sent at the beginning of the month, to merchants using Subscriptions
+	"subscription.not_renew", // A subscription on your account's status has changed to non-renewing.
+	"transfer.failed", // A transfer you attempted has failed
+	"transfer.success", // A successful transfer has been completed
+	"transfer.reversed", // A transfer you attempted has been reversed
+]);
+
+const VerificationDataSchema = z.object({
 	amount: z.number(),
 	authorization: z.object({
 		account_name: z.string(),
@@ -115,24 +141,34 @@ const PaystackChargeSuccessDataSchema = z.object({
 	paid_at: z.string(),
 	plan: z.record(z.string(), z.never()),
 	reference: z.string(),
-	status: PaystackTransactionStatusEnum,
+	status: PaystackTransactionStatusSchema,
 });
-
-const PaystackChargeEventTypeEnum = z
-	.literal("charge.success")
-	.or(z.string().transform<AnyString>((val) => val));
 
 export const paystackApiSchema = defineSchema({
 	"/transaction/initialize": {
-		body: PaystackInitTransactionBodySchema,
-		data: PaystackInitTransactionResponseSchema,
+		body: z.object({
+			amount: z.number(),
+			callback_url: z.string().optional(),
+			email: z.email(),
+			metadata: PaystackMetadataSchema.optional(),
+			reference: z.string(),
+		}),
+
+		data: BasePaystackResponseSchema.extend({
+			data: z.object({
+				access_code: z.string(),
+				authorization_url: z.string(),
+				reference: z.string(),
+			}),
+		}),
+
 		method: z.literal("POST"),
 	},
 
 	"/transaction/verify/:reference": {
 		data: z.object({
-			data: PaystackChargeSuccessDataSchema,
-			event: PaystackChargeEventTypeEnum,
+			data: VerificationDataSchema,
+			event: ChargeEventSchema,
 		}),
 	},
 });
