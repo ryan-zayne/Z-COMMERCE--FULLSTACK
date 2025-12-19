@@ -34,14 +34,13 @@ export const initTransaction = async (
 
 export type PaymentSuccessPayload = Pick<
 	z.infer<(typeof paystackApiSchema)["routes"]["/transaction/verify/:reference"]["data"]>["data"],
-	"amount" | "paid_at" | "reference" | "status"
->
-	& z.infer<
-		(typeof paystackApiSchema)["routes"]["/transaction/verify/:reference"]["data"]
-	>["data"]["metadata"];
+	"amount" | "metadata" | "paid_at" | "reference" | "status"
+>;
 
 export const verifyTransaction = async (reference: string) => {
-	const result = await callPaystackApi("/transaction/verify/:reference", { params: { reference } });
+	const result = await callPaystackApi("/transaction/verify/:reference", {
+		params: { reference },
+	});
 
 	if (result.error) {
 		return {
@@ -53,8 +52,7 @@ export const verifyTransaction = async (reference: string) => {
 
 	const payload = {
 		amount: result.data.data.amount / 100,
-		cartItems: result.data.data.metadata.cartItems,
-		customerId: result.data.data.metadata.customerId,
+		metadata: result.data.data.metadata,
 		paid_at: result.data.data.paid_at,
 		reference: result.data.data.reference,
 		status: result.data.data.status,

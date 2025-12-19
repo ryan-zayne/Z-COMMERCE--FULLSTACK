@@ -25,7 +25,7 @@ export const paystackHook = async (req: Request, options: PaystackHookOptions) =
 		.update(JSON.stringify(req.body))
 		.digest("hex");
 
-	if (hash !== req.headers["x-paystack-signature"]) {
+	if (!Object.is(hash, req.headers["x-paystack-signature"])) {
 		throw new AppError(400, "Invalid Event signature");
 	}
 
@@ -38,8 +38,7 @@ export const paystackHook = async (req: Request, options: PaystackHookOptions) =
 		case "charge.success": {
 			const payload = {
 				amount: validBody.data.amount / 100,
-				cartItems: validBody.data.metadata.cartItems,
-				customerId: validBody.data.metadata.customerId,
+				metadata: validBody.data.metadata,
 				paid_at: validBody.data.paid_at,
 				reference: validBody.data.reference,
 				status: validBody.data.status,
