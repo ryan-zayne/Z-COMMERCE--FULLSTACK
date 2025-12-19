@@ -6,10 +6,7 @@ import { paystackApiSchema } from "./apiSchema";
 const callPaystackApi = createFetchClient({
 	auth: ENVIRONMENT.PAYSTACK_SECRET_KEY,
 	baseURL: ENVIRONMENT.PAYSTACK_HOST,
-
 	schema: paystackApiSchema,
-
-	timeout: 2 * 60 * 1000,
 });
 
 export const initTransaction = async (

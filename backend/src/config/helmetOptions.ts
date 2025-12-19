@@ -3,10 +3,10 @@ import type { HelmetOptions } from "helmet";
 const helmetOptions = {
 	contentSecurityPolicy: {
 		directives: {
-			connectSrc: ["'self'", "https://dummyjson.com"],
+			connectSrc: ["'self'"],
 			defaultSrc: "'self'",
 			frameAncestors: ["'none'"],
-			imgSrc: ["'self'", "https://res.cloudinary.com", "https://i.dummyjson.com", "data:"],
+			imgSrc: ["'self'", "https://res.cloudinary.com", "data:"],
 			upgradeInsecureRequests: "'self'",
 		},
 

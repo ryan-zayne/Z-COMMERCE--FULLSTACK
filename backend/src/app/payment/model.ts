@@ -37,6 +37,9 @@ const cartItemsSchema = new mongoose.Schema<CartItems[number]>(
 );
 
 const PaymentSchema = new mongoose.Schema<PaymentType>({
+	amount: {
+		type: Number,
+	},
 	cartItems: {
 		type: [cartItemsSchema],
 	},

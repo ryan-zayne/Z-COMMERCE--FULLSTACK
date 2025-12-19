@@ -12,7 +12,7 @@ export const errorCodes = defineEnum(
 		UNAUTHORIZED: 401,
 		VALIDATION_ERROR: 422,
 	},
-	{ unionVariant: "values" }
+	{ inferredUnionVariant: "values" }
 );
 
 export type ErrorCodesUnion = typeof errorCodes.$inferUnion;
