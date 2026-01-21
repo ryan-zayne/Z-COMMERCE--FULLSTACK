@@ -93,7 +93,7 @@ function CheckoutPage() {
 
 	if (cart.length === 0) {
 		return (
-			<main className="mx-auto max-w-[1200px] px-[16px] py-[20px] md:px-[30px] md:py-[30px]">
+			<main className="mx-auto max-w-[1200px] px-[16px] py-[20px] md:p-[30px_30px]">
 				<header className="flex items-center justify-between border-b pb-[16px] md:pb-[20px]">
 					<h1 className="text-[25px] font-bold md:text-[32px]">Checkout</h1>
 				</header>
@@ -114,7 +114,7 @@ function CheckoutPage() {
 	}
 
 	return (
-		<main className="mx-auto max-w-[1200px] px-[16px] py-[20px] md:px-[30px] md:py-[30px]">
+		<main className="mx-auto max-w-[1200px] px-[16px] py-[20px] md:p-[30px_30px]">
 			<header className="flex items-center justify-between border-b pb-[16px] md:pb-[20px]">
 				<h1 className="text-[25px] font-bold md:text-[32px]">Checkout</h1>
 			</header>
@@ -124,7 +124,7 @@ function CheckoutPage() {
 					md:flex-row md:items-center md:gap-[40px]"
 			>
 				<Form.Root
-					methods={methods}
+					form={methods}
 					className="w-full gap-[24px]"
 					onSubmit={(event) => void onSubmit(event)}
 				>
@@ -218,7 +218,7 @@ function CheckoutPage() {
 									classNames={{
 										error: `border-b-error focus-within:border-b-error
 										dark:focus-within:border-b-error`,
-										input: `min-h-[40px] rounded-[4px] border border-carousel-btn bg-transparent
+										input: `min-h-10 rounded-[4px] border border-carousel-btn bg-transparent
 										px-[12px] text-[14px] text-input transition-colors duration-200
 										placeholder:text-gray-400 focus-within:border-navbar md:min-h-[44px]
 										md:text-[16px] dark:focus-within:border-carousel-dot`,
@@ -261,7 +261,7 @@ function CheckoutPage() {
 							type="root"
 						/>
 
-						<Form.WatchFormState
+						<Form.StateSubscribe
 							render={({ isSubmitting }) => (
 								<Button
 									type="submit"
@@ -281,9 +281,9 @@ function CheckoutPage() {
 				</Form.Root>
 
 				<aside className="rounded-[4px] bg-[#1c2128] p-[20px] md:w-[500px]">
-					<h2 className="mb-[20px] text-[18px] font-semibold">Order Summary</h2>
+					<h2 className="mb-5 text-[18px] font-semibold">Order Summary</h2>
 
-					<div className="flex flex-col gap-[20px] divide-y divide-carousel-btn">
+					<div className="flex flex-col gap-5 divide-y divide-carousel-btn">
 						<CartItemsList
 							each={cart}
 							renderItem={(item) => (

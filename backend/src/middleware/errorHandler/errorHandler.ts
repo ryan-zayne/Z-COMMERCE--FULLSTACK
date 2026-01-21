@@ -1,6 +1,6 @@
 import { consola } from "consola";
 import type { ErrorRequestHandler } from "express";
-import { type ErrorCodesUnion, errorCodes } from "../../constants";
+import { errorCodes, type ErrorCodesUnion } from "../../constants";
 import { AppError } from "../../utils";
 import { transformError } from "./transformError";
 

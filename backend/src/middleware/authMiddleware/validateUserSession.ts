@@ -1,12 +1,12 @@
-import { UserModel } from "@/app/auth/model";
-import { type DecodedJwtPayload, decodeJwtToken, isTokenInWhitelist } from "@/app/auth/services/common";
-import type { UserType } from "@/app/auth/types";
-import { ENVIRONMENT } from "@/config/env";
-import { AppError } from "@/utils";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import { consola } from "consola";
 import jwt from "jsonwebtoken";
 import type { HydratedDocument } from "mongoose";
+import { UserModel } from "@/app/auth/model";
+import { decodeJwtToken, isTokenInWhitelist, type DecodedJwtPayload } from "@/app/auth/services/common";
+import type { UserType } from "@/app/auth/types";
+import { ENVIRONMENT } from "@/config/env";
+import { AppError } from "@/utils";
 
 // Error messages
 const AUTH_ERROR_MESSAGES = defineEnum({

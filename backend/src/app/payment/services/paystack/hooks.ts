@@ -1,9 +1,9 @@
-import { ENVIRONMENT } from "@/config/env";
-import { AppError, readValidatedBody } from "@/utils";
+import crypto from "node:crypto";
 import { consola } from "consola";
 import type { Request } from "express";
-import crypto from "node:crypto";
 import type { z } from "zod";
+import { ENVIRONMENT } from "@/config/env";
+import { AppError, readValidatedBody } from "@/utils";
 import type { PaymentSuccessPayload } from "./api";
 import { paystackApiSchema } from "./apiSchema";
 

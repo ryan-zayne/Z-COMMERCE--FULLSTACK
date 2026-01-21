@@ -1,6 +1,6 @@
-import { IconBox } from "@/components/primitives/IconBox";
-import { Button } from "@/components/primitives/button";
 import { Link } from "react-router";
+import { Button } from "@/components/primitives/button";
+import { IconBox } from "@/components/primitives/IconBox";
 
 function VerificationSuccessPage() {
 	return (

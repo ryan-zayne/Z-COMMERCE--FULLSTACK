@@ -13,7 +13,7 @@ const useGetProductByCategory = (options: {
 	const { allProductsArray, vehiclesProductsArray, watchesProductsArray, ...restOfResult } =
 		useGetAllProducts();
 
-	const PRODUCTS_LOOKUP = new Map<string, typeof allProductsArray>([])
+	const PRODUCTS_LOOKUP = new Map<string, typeof allProductsArray>()
 		.set(
 			category,
 			allProductsArray.filter((item) => item?.category === category)

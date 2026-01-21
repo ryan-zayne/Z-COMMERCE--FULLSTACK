@@ -1,14 +1,14 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { isHTTPError } from "@zayne-labs/callapi/utils";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router";
 import { Button } from "@/components/primitives/button";
 import { Form } from "@/components/primitives/form";
 import { Show } from "@/components/primitives/show";
 import { Switch } from "@/components/primitives/switch";
 import { callBackendApi, type FormErrorData, type SessionData } from "@/lib/api/callBackendApi";
-import { type FormBodySchemaType, SigninBodySchema, SignupBodySchema } from "@/lib/schemas/auth";
+import { SigninBodySchema, SignupBodySchema, type FormBodySchemaType } from "@/lib/schemas/auth";
 import { cnMerge } from "@/lib/utils/cn";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { isHTTPError } from "@zayne-labs/callapi/utils";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
 
 export type FormAreaProps = {
 	classNames?: { form?: string };
@@ -82,7 +82,7 @@ function SharedForm(props: FormAreaProps) {
 
 	return (
 		<Form.Root
-			methods={methods}
+			form={methods}
 			className={cnMerge(
 				`mt-[25px] flex flex-col gap-[18px] [&_input]:text-[14px] lg:[&_input]:text-[16px]
 				[&_label]:text-[12px]`,
@@ -197,7 +197,7 @@ function SharedForm(props: FormAreaProps) {
 				</Switch.Root>
 			</Form.Field>
 
-			<Form.WatchFormState
+			<Form.StateSubscribe
 				render={({ isSubmitting }) => (
 					<Button
 						className={cnMerge(

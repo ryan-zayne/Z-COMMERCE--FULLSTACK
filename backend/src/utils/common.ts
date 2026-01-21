@@ -1,9 +1,9 @@
-import type { HydratedUserType, UserType } from "@/app/auth/types";
 import { omitKeys } from "@zayne-labs/toolkit-core";
 import type { UnmaskType } from "@zayne-labs/toolkit-type-helpers";
 import { consola } from "consola";
 import type { CookieOptions, Response } from "express";
 import type { AnyObject } from "mongoose";
+import type { HydratedUserType, UserType } from "@/app/auth/types";
 import { ENVIRONMENT } from "../config/env";
 
 type PossibleCookieNames = UnmaskType<"zayneAccessToken" | "zayneRefreshToken">;

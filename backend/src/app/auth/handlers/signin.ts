@@ -1,9 +1,9 @@
+import { differenceInHours } from "date-fns";
 import { UserModel } from "@/app/auth/model";
 import type { HydratedUserType } from "@/app/auth/types";
 import { ENVIRONMENT } from "@/config/env";
 import { catchAsync } from "@/middleware";
 import { AppError, AppResponse, omitSensitiveFields, setCookie } from "@/utils";
-import { differenceInHours } from "date-fns";
 import { getUpdatedTokenArray, sendVerificationEmail } from "../services/common";
 import type { SigninBodySchemaType } from "../services/validation";
 

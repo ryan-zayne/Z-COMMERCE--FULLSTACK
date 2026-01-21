@@ -1,4 +1,4 @@
-import { type StateCreator, create } from "zustand";
+import { create, type StateCreator } from "zustand";
 import type { GlobalStore } from "../types";
 import { createCommonStateSlice } from "./slices/commonStateSlice";
 import { createMediaQuerySlice } from "./slices/mediaQuerySlice";

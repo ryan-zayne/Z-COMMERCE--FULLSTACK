@@ -1,4 +1,4 @@
-import { LazyMotion, domAnimation } from "motion/react";
+import { domAnimation, LazyMotion } from "motion/react";
 import { SonnerToaster } from "./components/ui/Toaster";
 import { Router } from "./router";
 import { useGlobalStore } from "./store/zustand/globalStore";

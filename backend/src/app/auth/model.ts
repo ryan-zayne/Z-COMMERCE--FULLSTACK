@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import {
 	generateAccessToken,
 	generateRefreshToken,
@@ -5,7 +6,6 @@ import {
 	verifyPassword,
 } from "@/app/auth/services/common";
 import { RolesEnum } from "@/constants/enums";
-import mongoose from "mongoose";
 import type { UserMethods, UserModelType, UserType } from "./types";
 
 const UserSchema = new mongoose.Schema<UserType, unknown, UserMethods>(

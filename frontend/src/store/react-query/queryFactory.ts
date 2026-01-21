@@ -4,8 +4,8 @@ import { hardNavigate } from "@zayne-labs/toolkit-core";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import { toast } from "sonner";
 import {
-	type ApiSuccessResponse,
 	callBackendApiForQuery,
+	type BaseApiSuccessResponse,
 	type SessionData,
 } from "@/lib/api/callBackendApi";
 import { callDummyApi } from "@/lib/api/callDummyApi";
@@ -25,7 +25,7 @@ export const productKeyEnum = defineEnum([
 
 export const sessionQuery = (
 	options?: Pick<
-		CallApiExtraOptions<ApiSuccessResponse<SessionData>>,
+		CallApiExtraOptions<{ Data: BaseApiSuccessResponse<SessionData> }>,
 		"meta" | "onError" | "onRequestError" | "onResponseError" | "onSuccess"
 	>
 ) => {
@@ -33,7 +33,7 @@ export const sessionQuery = (
 
 	return queryOptions({
 		queryFn: () => {
-			return callBackendApiForQuery("/auth/session", {
+			return callBackendApiForQuery<SessionData>("/auth/session", {
 				meta: { redirectOn401Error: false, ...options?.meta },
 				onError: options?.onError,
 				onRequestError: options?.onRequestError,

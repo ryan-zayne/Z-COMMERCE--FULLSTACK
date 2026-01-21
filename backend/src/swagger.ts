@@ -1,6 +1,6 @@
 import express from "express";
 import swaggerJsdoc from "swagger-jsdoc";
-import { type SwaggerOptions, type SwaggerUiOptions, serve, setup } from "swagger-ui-express";
+import { serve, setup, type SwaggerOptions, type SwaggerUiOptions } from "swagger-ui-express";
 import { ENVIRONMENT } from "./config/env";
 
 const swaggerOptions: SwaggerOptions = {

@@ -9,7 +9,7 @@ const LOADER_LOOKUP = {
 					backdrop-blur-[1.5px] select-none"
 			>
 				<img
-					className="aspect-square w-[300px] max-md:translate-y-[-40px] lg:w-[30%]"
+					className="aspect-square w-[300px] max-md:-translate-y-10 lg:w-[30%]"
 					src={loadingSpinner}
 					alt=""
 				/>
@@ -19,7 +19,7 @@ const LOADER_LOOKUP = {
 
 	regular: () => (
 		<aside id="preloader">
-			{/* eslint-disable tailwindcss-better/no-unregistered-classes */}
+			{/* eslint-disable tailwindcss-better/no-unknown-classes */}
 			<div className="dank-ass-loader">
 				<div className="row">
 					<div className="arrow up outer outer-18" />
@@ -54,7 +54,7 @@ const LOADER_LOOKUP = {
 					<div className="arrow down outer outer-9" />
 				</div>
 			</div>
-			{/* eslint-enable tailwindcss-better/no-unregistered-classes */}
+			{/* eslint-enable tailwindcss-better/no-unknown-classes */}
 		</aside>
 	),
 };

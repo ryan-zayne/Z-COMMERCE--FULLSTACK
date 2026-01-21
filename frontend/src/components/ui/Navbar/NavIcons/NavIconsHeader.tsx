@@ -1,3 +1,7 @@
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useToggle } from "@zayne-labs/toolkit-react";
+import { useEffect } from "react";
+import { Link } from "react-router";
 import { Button } from "@/components/primitives/button";
 import { IconBox } from "@/components/primitives/IconBox";
 import { Logo } from "@/components/primitives/Logo";
@@ -9,10 +13,6 @@ import { sessionQuery } from "@/store/react-query/queryFactory";
 import { useGlobalStore } from "@/store/zustand/globalStore";
 import { useShopStore } from "@/store/zustand/shopStore";
 import { useThemeStore } from "@/store/zustand/themeStore";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useToggle } from "@zayne-labs/toolkit-react";
-import { useEffect } from "react";
-import { Link } from "react-router";
 import { CartDrawer } from "./Cart/CartDrawer";
 import { HamBurgerButton } from "./HamBurgerButton";
 import { ThemeSwitchButton } from "./ThemeSwitchButton";
@@ -84,7 +84,7 @@ function NavIconsHeader() {
 
 				<Button
 					unstyled={true}
-					className="hover:[transform:rotateY(360deg)] hover:text-heading
+					className="hover:transform-[rotateY(360deg)] hover:text-heading
 						hover:[transition:transform_1000ms_ease-in-out] active:scale-[1.2] lg:text-[23px]"
 				>
 					<Link to="/wishlist">

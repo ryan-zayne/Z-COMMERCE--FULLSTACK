@@ -1,5 +1,6 @@
+import type { ResponseErrorContext } from "@zayne-labs/callapi";
 import { definePlugin } from "@zayne-labs/callapi/utils";
-import { type AnyFunction, type UnionDiscriminator, isObject } from "@zayne-labs/toolkit-type-helpers";
+import { isObject, type AnyFunction, type UnionDiscriminator } from "@zayne-labs/toolkit-type-helpers";
 import { toast } from "sonner";
 
 type Context = {
@@ -32,7 +33,10 @@ export const redirectOn401ErrorPlugin = (context?: Context) => {
 
 	return definePlugin({
 		hooks: {
-			onResponseError: ({ options, response }) => {
+			onResponseError: ({
+				options,
+				response,
+			}: ResponseErrorContext<{ Meta: RedirectOn401ErrorPluginMeta }>) => {
 				const shouldRedirect =
 					response.status === 401 && !routesToSkip.some((route) => options.fullURL?.endsWith(route));
 

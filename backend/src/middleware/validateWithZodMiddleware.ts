@@ -1,5 +1,5 @@
-import { SigninBodySchema, SignupBodySchema } from "@/app/auth/services/validation";
 import { z } from "zod";
+import { SigninBodySchema, SignupBodySchema } from "@/app/auth/services/validation";
 import { readValidatedBody } from "../utils";
 import { catchAsync } from "./catchAsyncErrors";
 

@@ -1,6 +1,6 @@
+import { m } from "motion/react";
 import { IconBox } from "@/components/primitives/IconBox";
 import { SearchForm } from "@/components/ui/SearchForm";
-import { m } from "motion/react";
 import { getOnApple, getOnGoogle, NewsletterIcon } from "./images";
 
 function FooterHeaderSection() {

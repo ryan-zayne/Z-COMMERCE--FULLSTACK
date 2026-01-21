@@ -1,6 +1,6 @@
-import { ENVIRONMENT } from "@/config/env";
 import { consola } from "consola";
 import mongoose from "mongoose";
+import { ENVIRONMENT } from "@/config/env";
 
 const setConnectionToDb = async () => {
 	try {

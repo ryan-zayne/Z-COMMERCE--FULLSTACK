@@ -1,6 +1,6 @@
-import type { RolesEnum } from "@/constants/enums";
 import type { SignOptions } from "jsonwebtoken";
 import type { HydratedDocumentFromSchema, Model, Schema } from "mongoose";
+import type { RolesEnum } from "@/constants/enums";
 
 export type UserType = {
 	address: string[];

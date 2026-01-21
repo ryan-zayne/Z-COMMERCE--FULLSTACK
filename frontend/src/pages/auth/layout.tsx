@@ -1,8 +1,8 @@
+import { preload } from "react-dom";
+import { Outlet, useLocation } from "react-router";
 import { Logo } from "@/components/primitives/Logo";
 import { cnJoin } from "@/lib/utils/cn";
 import { useGlobalStore } from "@/store/zustand/globalStore";
-import { preload } from "react-dom";
-import { Outlet, useLocation } from "react-router";
 
 const desktopImage =
 	"https://res.cloudinary.com/djvestif4/image/upload/v1700101265/z-commerce/glitter.webp";

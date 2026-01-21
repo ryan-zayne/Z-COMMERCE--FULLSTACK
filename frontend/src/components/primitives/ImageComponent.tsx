@@ -1,5 +1,5 @@
-import { cnMerge } from "@/lib/utils/cn";
 import { useState } from "react";
+import { cnMerge } from "@/lib/utils/cn";
 
 type ImageComponentProps = React.ComponentPropsWithRef<"img"> & {
 	blurSrc?: string;
@@ -67,7 +67,7 @@ function ImageComponent(props: ImageComponentProps) {
 	const { imageType = "hasSkeleton", ...restOfProps } = props;
 	const [isImageLoaded, setIsImageLoaded] = useState(false);
 
-	const { [imageType]: ImageType } = IMAGE_TYPE_LOOKUP;
+	const ImageType = IMAGE_TYPE_LOOKUP[imageType];
 
 	return (
 		<ImageType

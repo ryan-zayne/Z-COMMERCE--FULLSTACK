@@ -1,19 +1,24 @@
-import { type CallApiParameters, createFetchClient, type ResultModeType } from "@zayne-labs/callapi";
+import {
+	createFetchClientWithContext,
+	type CallApiParameters,
+	type GetCallApiContext,
+	type ResultModeType,
+} from "@zayne-labs/callapi";
 import {
 	redirectOn401ErrorPlugin,
-	type RedirectOn401ErrorPluginMeta,
 	toastPlugin,
+	type RedirectOn401ErrorPluginMeta,
 	type ToastPluginMeta,
 } from "./plugins";
 
-export type ApiSuccessResponse<TData> = {
+export type BaseApiSuccessResponse<TData = unknown> = {
 	data?: TData;
 	message: string;
 	status: "success";
 	success: true;
 };
 
-export type ApiErrorResponse<TError = Record<string, string>> = {
+export type BaseApiErrorResponse<TError = Record<string, string>> = {
 	errors?: TError;
 	message: string;
 	status: "error";
@@ -22,27 +27,24 @@ export type ApiErrorResponse<TError = Record<string, string>> = {
 
 type GlobalMeta = RedirectOn401ErrorPluginMeta & ToastPluginMeta;
 
-declare module "@zayne-labs/callapi" {
-	// eslint-disable-next-line ts-eslint/consistent-type-definitions
-	interface Register {
-		meta: GlobalMeta;
-	}
-}
+// declare module "@zayne-labs/callapi" {
+// 	// eslint-disable-next-line ts-eslint/consistent-type-definitions
+// 	interface Register {
+// 		meta: GlobalMeta;
+// 	}
+// }
 
 const REMOTE_BACKEND_HOST = "https://api-zayne-commerce.onrender.com";
-// const REMOTE_BACKEND_HOST = "";
 
 const LOCAL_BACKEND_HOST = "http://localhost:8000";
-// const LOCAL_BACKEND_HOST = "";
 
 const BACKEND_HOST = process.env.NODE_ENV === "development" ? LOCAL_BACKEND_HOST : REMOTE_BACKEND_HOST;
 // const BACKEND_HOST = REMOTE_BACKEND_HOST;
 
 const BASE_API_URL = `${BACKEND_HOST}/api/v1`;
 
-const sharedFetchClient = createFetchClient({
+const sharedFetchClient = createFetchClientWithContext<GetCallApiContext<{ Meta: GlobalMeta }>>()({
 	baseURL: BASE_API_URL,
-	// credentials: "same-origin",
 	credentials: "include",
 	plugins: [redirectOn401ErrorPlugin(), toastPlugin()],
 });
@@ -52,7 +54,11 @@ export const callBackendApi = <
 	TErrorData = unknown,
 	TResultMode extends ResultModeType = ResultModeType,
 >(
-	...parameters: CallApiParameters<ApiSuccessResponse<TData>, ApiErrorResponse<TErrorData>, TResultMode>
+	...parameters: CallApiParameters<
+		BaseApiSuccessResponse<TData>,
+		BaseApiErrorResponse<TErrorData>,
+		TResultMode
+	>
 ) => {
 	const [url, config] = parameters;
 
@@ -60,7 +66,7 @@ export const callBackendApi = <
 };
 
 export const callBackendApiForQuery = <TData = unknown>(
-	...parameters: CallApiParameters<ApiSuccessResponse<TData>, false | undefined>
+	...parameters: CallApiParameters<BaseApiSuccessResponse<TData>, false | undefined>
 ) => {
 	const [url, config] = parameters;
 

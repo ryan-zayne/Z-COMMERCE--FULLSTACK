@@ -1,8 +1,8 @@
-import { sessionQuery } from "@/store/react-query/queryFactory";
 import { useQuery } from "@tanstack/react-query";
 import { useLayoutEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
 import { toast } from "sonner";
+import { sessionQuery } from "@/store/react-query/queryFactory";
 
 function VerifyEmailLayout() {
 	const navigate = useNavigate();

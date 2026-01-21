@@ -29,7 +29,7 @@ function LoadingSkeleton({ count = 5, variant = "genericPage" }: SkeletonProps) 
 							<li
 								key={id}
 								className={cnMerge(
-									"w-[min(100%,250px)] rounded-[12px] shadow-[0_0_3px_hsl(60,_100%,_0%,_0.3)]"
+									"w-[min(100%,250px)] rounded-[12px] shadow-[0_0_3px_hsl(60,100%,0%,0.3)]"
 								)}
 							>
 								<SkeletonTheme
