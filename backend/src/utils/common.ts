@@ -1,6 +1,5 @@
 import { omitKeys } from "@zayne-labs/toolkit-core";
 import type { UnmaskType } from "@zayne-labs/toolkit-type-helpers";
-import { consola } from "consola";
 import type { CookieOptions, Response } from "express";
 import type { AnyObject } from "mongoose";
 import type { HydratedUserType, UserType } from "@/app/auth/types";
@@ -64,19 +63,8 @@ export const omitSensitiveFields = <TObject extends AnyObject, TOmitArray extend
 	return safeUserObject;
 };
 
-export const getDomainReferer = (env: typeof ENVIRONMENT.NODE_ENV) => {
-	try {
-		if (env === "production") {
-			return ENVIRONMENT.FRONTEND_URL;
-		}
-
-		const devFrontendUrl = "http://localhost:5173";
-
-		return devFrontendUrl;
-	} catch (error) {
-		consola.error(error);
-		return null;
-	}
+export const getDomainReferer = () => {
+	return ENVIRONMENT.NODE_ENV === "development" ? "http://localhost:5173" : ENVIRONMENT.FRONTEND_URL;
 };
 
 // prettier-ignore

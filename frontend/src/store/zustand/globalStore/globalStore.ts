@@ -1,4 +1,5 @@
-import { create, type StateCreator } from "zustand";
+import { createReactStore } from "@zayne-labs/toolkit-react/zustand-compat";
+import type { StateCreator } from "zustand";
 import type { GlobalStore } from "../types";
 import { createCommonStateSlice } from "./slices/commonStateSlice";
 import { createMediaQuerySlice } from "./slices/mediaQuerySlice";
@@ -15,4 +16,4 @@ const globalStoreObjectFn: StateCreator<GlobalStore> = (...params) => ({
 });
 
 // Store hook creation
-export const useGlobalStore = create<GlobalStore>()(globalStoreObjectFn);
+export const useGlobalStore = createReactStore<GlobalStore>()(globalStoreObjectFn);
