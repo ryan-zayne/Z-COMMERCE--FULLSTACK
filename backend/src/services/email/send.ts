@@ -22,6 +22,7 @@ const transporter = nodemailer.createTransport({
 export const sendEmail = async (options: EmailOptions) => {
 	const { data, type } = options;
 
+	// eslint-disable-next-line security/detect-object-injection
 	const templateOptions = TEMPLATES_LOOKUP[type];
 
 	try {

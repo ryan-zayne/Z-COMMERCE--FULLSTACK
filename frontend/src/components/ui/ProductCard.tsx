@@ -45,8 +45,17 @@ function ProductCard(props: ProductCardProps) {
 	};
 
 	return (
-		<m.li
-			className="w-[min(100%,260px)]"
+		<Card.Root
+			as={m.li}
+			className={cnMerge(
+				`group/card w-[min(100%,260px)] justify-between rounded-[12px]
+				transition-[scale,box-shadow,background-color] duration-1000 ease-in-out hover:scale-[1.03]
+				hover:shadow-[0_0_6px_0_hsl(60,100%,0%,1)] dark:hover:bg-primary
+				dark:hover:shadow-[0_0_6px_0px_var(--carousel-dot)]`,
+				isHearted
+					&& `scale-[1.03] shadow-[0_0_6px_0_hsl(60,100%,0%)] dark:scale-[1.03]
+					dark:shadow-[0_0_6px_0px_var(--carousel-dot)]`
+			)}
 			initial={{ opacity: 0, y: 200 }}
 			whileInView={{
 				opacity: 1,
@@ -55,99 +64,84 @@ function ProductCard(props: ProductCardProps) {
 			}}
 			viewport={{ once: true }}
 		>
-			<Card.Root
-				className={cnMerge(
-					`group/card size-full rounded-[12px] transition-[scale,box-shadow,background-color]
-					duration-1000 ease-in-out hover:scale-[1.03] hover:shadow-[0_0_6px_0_hsl(60,100%,0%,1)]
-					dark:hover:bg-primary dark:hover:shadow-[0_0_6px_0px_var(--carousel-dot)]`,
-					isHearted
-						&& `scale-[1.03] shadow-[0_0_6px_0_hsl(60,_100%,_0%,_1)] dark:scale-[1.03]
-						dark:shadow-[0_0_6px_0px_var(--carousel-dot)]`
-				)}
-			>
-				<Link to={link} className="flex size-full flex-col justify-between">
-					<Card.Header
-						as="div"
-						className="relative h-[180px] w-full overflow-hidden rounded-[8px_8px_0_0]"
+			<Link to={link} className="contents">
+				<Card.Header
+					as="div"
+					className="relative h-[180px] w-full overflow-hidden rounded-[8px_8px_0_0]"
+				>
+					<Button
+						unstyled={true}
+						type="button"
+						onClick={handleAddToWishList}
+						className={cnJoin(
+							"group/btn absolute right-[13px] bottom-[125px] z-100 rounded-[50%] bg-primary p-2",
+
+							isHearted ?
+								"translate-y-0 opacity-100"
+							:	`translate-y-[50px] opacity-0 transition-[opacity,translate] duration-1000
+								group-hover/card:translate-y-0 group-hover/card:opacity-100`
+						)}
 					>
-						<Button
-							unstyled={true}
-							type="button"
-							onClick={handleAddToWishList}
-							className={cnJoin(
-								`group/btn absolute right-[13px] bottom-[110px] z-100 rounded-[50%] bg-primary
-								p-[7px]`,
+						{isHearted ?
+							<IconBox
+								icon="ant-design:heart-filled"
+								className="scale-[1.16] text-[16px] text-heading group-active/btn:scale-[1.23]"
+							/>
+						:	<IconBox
+								icon="ant-design:heart-outlined"
+								className="text-[16px] text-carousel-dot group-hover/btn:text-heading
+									group-active/btn:scale-[1.23]"
+							/>
+						}
+					</Button>
 
-								isHearted ?
-									"translate-y-0 opacity-100"
-								:	`translate-y-[50px] opacity-0 transition-[opacity,translate] duration-1000
-									group-hover/card:translate-y-0 group-hover/card:opacity-100`
-							)}
-						>
-							{isHearted ?
-								<IconBox
-									icon="ant-design:heart-filled"
-									className="scale-[1.16] text-[16px] text-heading group-active/btn:scale-[1.23]"
-								/>
-							:	<IconBox
-									icon="ant-design:heart-outlined"
-									className="text-[16px] text-carousel-dot group-hover/btn:text-heading
-										group-active/btn:scale-[1.23]"
-								/>
-							}
-						</Button>
+					<ImageComponent
+						className={cnJoin(
+							`rounded-[8px_8px_0_0] brightness-[0.9] transition-transform duration-800 ease-in-out
+							group-hover/card:scale-[1.17]`,
+							isHearted && "scale-[1.17]"
+						)}
+						src={image}
+						loading="lazy"
+						imageType="hasSkeleton"
+						onClick={(e) => isMobile && e.preventDefault()}
+					/>
+				</Card.Header>
 
-						<ImageComponent
-							className={cnJoin(
-								`rounded-[8px_8px_0_0] brightness-[0.9] transition-transform duration-800
-								ease-in-out group-hover/card:scale-[1.17]`,
-								isHearted && "scale-[1.17]"
-							)}
-							src={image}
-							loading="lazy"
-							imageType="hasSkeleton"
-							onClick={(e) => isMobile && e.preventDefault()}
-						/>
-					</Card.Header>
+				<Card.Content className="px-3.5 pt-2.5">
+					<header className="flex min-h-[72px] items-center justify-between gap-2.5 font-semibold">
+						<h3 className="capitalize">{productItem.title}</h3>
+						<span className="text-[18px]">
+							<sup className="text-[14px]">$</sup>
+							{productItem.price}
+							<sup className="text-[14px]">.00</sup>
+						</span>
+					</header>
 
-					<Card.Content className="px-[14px] pt-[10px]">
-						<header
-							className="flex min-h-[72px] items-center justify-between gap-[10px] font-semibold"
-						>
-							<h3 className="capitalize">{productItem.title}</h3>
-							<span className="text-[18px]">
-								<sup className="text-[14px]">$</sup>+ {productItem.price}
-								<sup className="text-[14px]">.00</sup>
-							</span>
-						</header>
+					<p className="mt-[5px] min-h-[60px] max-w-[30ch] text-[12px]">{productItem.description}</p>
+				</Card.Content>
 
-						<p className="mt-[5px] min-h-[60px] max-w-[30ch] text-[12px]">
-							{productItem.description}
-						</p>
-					</Card.Content>
+				<Card.Footer className="p-[13px_10px_10px]">
+					<StarRating rating={productItem.rating} />
 
-					<Card.Footer className="p-[13px_10px_10px]">
-						<StarRating rating={productItem.rating} />
+					<hr
+						className={cnJoin(
+							"h-[1.8px] bg-carousel-dot group-hover/card:opacity-100",
+							isHearted ? "opacity-0" : "opacity-100"
+						)}
+					/>
 
-						<hr
-							className={cnJoin(
-								"h-[1.8px] bg-carousel-dot group-hover/card:opacity-100",
-								isHearted ? "opacity-0" : "opacity-100"
-							)}
-						/>
-
-						<Button
-							variant="cart"
-							theme="secondary"
-							className="mt-[10px] p-[8px_13px] text-[13px] font-medium active:translate-y-[1.5px]"
-							onClick={handleAddToCart}
-						>
-							Add to Cart
-						</Button>
-					</Card.Footer>
-				</Link>
-			</Card.Root>
-		</m.li>
+					<Button
+						variant="cart"
+						theme="secondary"
+						className="mt-[10px] p-[8px_13px] text-[13px] font-medium active:translate-y-[1.5px]"
+						onClick={handleAddToCart}
+					>
+						Add to Cart
+					</Button>
+				</Card.Footer>
+			</Link>
+		</Card.Root>
 	);
 }
 

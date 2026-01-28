@@ -3,9 +3,10 @@ import { camelCasedProps, getIconDetails, type MoniconProps } from "@monicon/ico
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";
 import { isString } from "@zayne-labs/toolkit-type-helpers";
 import { useMemo } from "react";
+import type { icons } from "../icons/icon-constant";
 
-export type MoniconIconBoxProps = Omit<InferProps<"svg">, "strokeWidth">
-	& Omit<MoniconProps, "name"> & { icon: MoniconProps["name"]; type?: "local" };
+export type MoniconIconBoxProps = InferProps<"svg">
+	& Omit<MoniconProps, "name"> & { icon: typeof icons.$inferUnion; type?: "local" };
 
 type IconifyIconBoxProps = Omit<IconProps, "icon"> & {
 	icon: string | IconifyIconType;
@@ -20,7 +21,7 @@ export function IconBox(props: IconBoxProps) {
 	switch (type) {
 		case "local": {
 			if (!isString(icon)) return;
-			return <Monicon icon={icon as MoniconProps["name"]} {...(restOfProps as object)} />;
+			return <Monicon icon={icon as never} {...(restOfProps as object)} />;
 		}
 
 		case "online": {
@@ -34,7 +35,7 @@ export function IconBox(props: IconBoxProps) {
 }
 
 export function Monicon(props: Omit<MoniconIconBoxProps, "type">) {
-	const { color, height = "1em", icon, size, strokeWidth, width = "1em", ...restOfProps } = props;
+	const { color, icon, size, strokeWidth, ...restOfProps } = props;
 
 	const details = useMemo(
 		() =>
@@ -56,10 +57,9 @@ export function Monicon(props: Omit<MoniconIconBoxProps, "type">) {
 		<svg
 			{...attributes}
 			{...restOfProps}
-			width={width}
-			height={height}
 			// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
 			dangerouslySetInnerHTML={{ __html: details.innerHtml }}
 		/>
 	);
 }
+

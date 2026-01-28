@@ -2,7 +2,7 @@
 	"name": "@z-commerce/root",
 	"type": "module",
 	"version": "1.0.0",
-	"packageManager": "pnpm@10.28.1",
+	"packageManager": "pnpm@10.28.2",
 	"scripts": {
 		"dev:backend": "pnpm --filter @z-commerce/backend dev",
 		"dev:frontend": "pnpm --filter @z-commerce/frontend dev",
@@ -13,13 +13,13 @@
 		"lint:type-check": "pnpm -r lint:type-check"
 	},
 	"devDependencies": {
-		"@eslint-react/eslint-plugin": "^2.7.2",
+		"@eslint-react/eslint-plugin": "^2.7.4",
 		"@tanstack/eslint-plugin-query": "^5.91.3",
 		"@zayne-labs/eslint-config": "^0.11.21",
 		"@zayne-labs/prettier-config": "^0.11.21",
 		"@zayne-labs/tsconfig": "^0.11.21",
 		"eslint": "^9.39.2",
-		"eslint-plugin-better-tailwindcss": "^4.0.1",
+		"eslint-plugin-better-tailwindcss": "^4.0.2",
 		"eslint-plugin-react-hooks": "^7.0.1",
 		"eslint-plugin-react-refresh": "^0.4.26",
 		"eslint-plugin-react-you-might-not-need-an-effect": "^0.8.5",
