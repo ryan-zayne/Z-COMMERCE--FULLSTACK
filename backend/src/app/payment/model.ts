@@ -1,20 +1,16 @@
+import {
+	PaymentStatusEnum,
+	type InitializePaymentBodySchema,
+	type PaymentDetailsSchema,
+} from "@z-commerce/shared/validation/backendApiSchema";
 import mongoose, { type Model, type SchemaDefinitionProperty } from "mongoose";
 import type { z } from "zod";
-import { PaymentStatusEnum } from "@/constants";
-import { paystackApiSchema } from "./services/paystack/apiSchema";
 
-type CartItems = z.infer<
-	(typeof paystackApiSchema)["routes"]["/transaction/verify/:reference"]["data"]
->["data"]["metadata"]["cartItems"];
+type CartItems = z.infer<typeof InitializePaymentBodySchema>["cartItems"];
 
-type PaymentType = {
-	amount: number;
-	cartItems: CartItems;
+type PaymentType = z.infer<typeof PaymentDetailsSchema> & {
 	customerId: SchemaDefinitionProperty;
 	paymentDate: string;
-	paymentMeta: Record<string, unknown>;
-	paymentStatus: keyof typeof PaymentStatusEnum;
-	reference: string;
 };
 
 const cartItemsSchema = new mongoose.Schema<CartItems[number]>(

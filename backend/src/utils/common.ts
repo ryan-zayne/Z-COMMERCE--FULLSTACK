@@ -30,14 +30,10 @@ export const removeCookie = (res: Response, name: PossibleCookieNames) => {
 };
 
 export const omitSensitiveFields = <TObject extends AnyObject, TOmitArray extends Array<keyof UserType>>(
-	userObject: TObject | null,
+	userObject: TObject,
 	keysToOmit?: TOmitArray | null,
 	options?: { replaceId?: boolean }
 ) => {
-	if (!userObject) {
-		return null;
-	}
-
 	const { replaceId } = options ?? {};
 
 	// == Use JSON.parse and JSON.stringify to clone the user object, to prevent `omitKeys` from transforming the object to mongodb nonsense

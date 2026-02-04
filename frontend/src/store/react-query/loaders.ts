@@ -1,5 +1,5 @@
 import { getQueryClient } from "./queryClient";
-import { productKeyEnum, productQuery, sessionQuery } from "./queryFactory";
+import { productKeyEnum, productQuery, sessionQuery } from "./queryOptions";
 
 const queryClient = getQueryClient();
 

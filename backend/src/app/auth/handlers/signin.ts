@@ -1,16 +1,17 @@
 import { differenceInHours } from "date-fns";
+import type { z } from "zod";
 import { UserModel } from "@/app/auth/model";
 import type { HydratedUserType } from "@/app/auth/types";
 import { ENVIRONMENT } from "@/config/env";
 import { catchAsync } from "@/middleware";
 import { AppError, AppResponse, omitSensitiveFields, setCookie } from "@/utils";
 import { getUpdatedTokenArray, sendVerificationEmail } from "../services/common";
-import type { SigninBodySchemaType } from "../services/validation";
+import type { SigninBodySchema } from "../services/validation";
 
 // @route POST /api/auth/login
 // @access Public
 const signIn = catchAsync<{
-	body: SigninBodySchemaType;
+	body: z.infer<typeof SigninBodySchema>;
 	signedCookies: {
 		zayneRefreshToken: string;
 	};
@@ -22,7 +23,7 @@ const signIn = catchAsync<{
 	const currentUser = await UserModel.findOne({ email }).select(["+password", "+refreshTokenArray"]);
 
 	if (!currentUser) {
-		throw new AppError(401, "Email or password is incorrect");
+		throw new AppError({ code: 401, message: "Email or password is incorrect" });
 	}
 
 	const isValidPassword = await currentUser.verifyPassword(password);
@@ -31,7 +32,7 @@ const signIn = catchAsync<{
 		// == For every time the password is gotten wrong, increment the login retries by 1
 		await UserModel.findByIdAndUpdate(currentUser._id, { $inc: { loginRetries: 1 } });
 
-		throw new AppError(401, "Email or password is incorrect");
+		throw new AppError({ code: 401, message: "Email or password is incorrect" });
 	}
 
 	if (!currentUser.isEmailVerified) {
@@ -40,7 +41,7 @@ const signIn = catchAsync<{
 	}
 
 	if (currentUser.isSuspended) {
-		throw new AppError(401, "Your account is currently suspended");
+		throw new AppError({ code: 401, message: "Your account is currently suspended" });
 	}
 
 	// == Check if user has exceeded login retries (3 times in 12 hours)
@@ -49,7 +50,7 @@ const signIn = catchAsync<{
 	const hoursSinceLastLogin = differenceInHours(now, currentUser.lastLogin);
 
 	if (currentUser.loginRetries >= 3 && hoursSinceLastLogin < 12) {
-		throw new AppError(401, "Login retries exceeded");
+		throw new AppError({ code: 401, message: "Login retries exceeded" });
 
 		// TODO: send reset password email to user
 	}
@@ -80,8 +81,11 @@ const signIn = catchAsync<{
 		expires: new Date(Date.now() + ENVIRONMENT.REFRESH_JWT_EXPIRES_IN),
 	});
 
-	return AppResponse(res, 200, "Signed in successfully", {
-		user: omitSensitiveFields(updatedUser, ["isDeleted"], { replaceId: true }),
+	return AppResponse(res, {
+		data: {
+			user: omitSensitiveFields(updatedUser ?? {}, ["isDeleted"], { replaceId: true }),
+		},
+		message: "Signed in successfully",
 	});
 });
 

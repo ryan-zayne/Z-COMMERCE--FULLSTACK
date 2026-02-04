@@ -32,7 +32,7 @@ function CartDrawer(props: CartDrawerProps) {
 				className="relative active:scale-[1.1]"
 				onClick={drawer.onToggle}
 			>
-				<IconBox icon="bx:cart-alt" className="hover:text-heading lg:text-[23px]" />
+				<IconBox icon="bx:cart-alt" className="hover:text-heading lg:size-6" />
 
 				{cart.length > 0 && (
 					<span
@@ -57,7 +57,7 @@ function CartDrawer(props: CartDrawerProps) {
 					>
 						<IconBox
 							icon="mdi:cart"
-							className={cnJoin("text-[45px]", isDarkMode ? "text-carousel-dot" : "text-primary")}
+							className={cnJoin("size-11", isDarkMode ? "text-carousel-dot" : "text-primary")}
 						/>
 
 						<Drawer.CloseButton

@@ -23,8 +23,8 @@ function ItemHeader({ productItem }: ItemHeaderProps) {
 
 	return (
 		<>
-			<Button unstyled={true} className={"text-[30px]"}>
-				<Link to={"/"}>
+			<Button unstyled={true} className="text-[30px]" asChild={true}>
+				<Link to="/">
 					<IconBox icon="typcn:arrow-back" />
 				</Link>
 			</Button>
@@ -35,17 +35,17 @@ function ItemHeader({ productItem }: ItemHeaderProps) {
 
 			<Button
 				unstyled={true}
-				className="flex size-[40px] items-center justify-center rounded-[50%] bg-primary"
+				className="flex size-10 items-center justify-center rounded-[50%] bg-primary"
 				onClick={handleHeartClick}
 			>
 				{isHearted ?
 					<IconBox
 						icon="ant-design:heart-filled"
-						className="size-[2.10px] text-heading active:scale-[1.23]"
+						className="size-5 text-heading active:scale-[1.23]"
 					/>
 				:	<IconBox
 						icon="ant-design:heart-outlined"
-						className="size-[2.10px] text-carousel-dot hover:text-heading active:scale-[1.23]"
+						className="size-5 text-carousel-dot hover:text-heading active:scale-[1.23]"
 					/>
 				}
 			</Button>

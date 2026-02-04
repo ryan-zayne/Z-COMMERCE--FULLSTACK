@@ -9,7 +9,7 @@ import { DropDown } from "@/components/ui/DropDown";
 import { SearchForm } from "@/components/ui/SearchForm";
 import { callBackendApi } from "@/lib/api/callBackendApi";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { sessionQuery } from "@/store/react-query/queryFactory";
+import { sessionQuery } from "@/store/react-query/queryOptions";
 import { useGlobalStore } from "@/store/zustand/globalStore";
 import { useShopStore } from "@/store/zustand/shopStore";
 import { useThemeStore } from "@/store/zustand/themeStore";
@@ -31,13 +31,14 @@ function NavIconsHeader() {
 		if (!isMobile && isSearchShow) {
 			toggleSearchShow(false);
 		}
+		// eslint-disable-next-line react-hooks/rule-suppression
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isMobile, isSearchShow]);
 
 	const queryClient = useQueryClient();
 
 	const logout = () => {
-		void callBackendApi("/auth/signout", {
+		void callBackendApi("@get/auth/signout", {
 			meta: {
 				toast: { success: true },
 			},

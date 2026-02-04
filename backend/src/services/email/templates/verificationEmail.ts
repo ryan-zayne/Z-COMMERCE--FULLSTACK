@@ -1,36 +1,31 @@
 import { RootLayout } from "./layouts/root";
-import type { WelcomeEmailData } from "./types";
+import type { VerifyEmailData } from "./types";
 
-const welcomeEmail = (data: WelcomeEmailData) => {
-	// Get the user's preferred color scheme
-	const isDarkMode = true; // This can be made dynamic based on user preferences
+const colors = {
+	dark: {
+		background: "linear-gradient(135deg, hsl(240, 6%, 7%) 0%, hsl(240, 6%, 12%) 100%)",
+		borderColor: "hsl(212, 8%, 64%)",
+		buttonGradient: "linear-gradient(to right, hsl(43, 67%, 50%), hsl(43, 91%, 25%))",
+		cardBackground:
+			"linear-gradient(135deg, hsla(215, 17%, 25%, 0.2) 0%, hsla(215, 17%, 25%, 0.1) 100%)",
+		headerText: "hsl(43, 67%, 50%)",
+		labelText: "hsl(34, 10%, 58%)",
+		text: "hsl(34, 5%, 71%)",
+	},
+	light: {
+		background: "linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(214, 32%, 91%) 100%)",
+		borderColor: "hsl(214, 32%, 91%)",
+		buttonGradient: "linear-gradient(to right, hsl(43, 100%, 55%), hsl(43, 100%, 65%))",
+		cardBackground:
+			"linear-gradient(135deg, hsla(215, 19%, 35%, 0.1) 0%, hsla(215, 19%, 35%, 0.05) 100%)",
+		headerText: "hsl(43, 100%, 55%)",
+		labelText: "hsl(0, 0%, 45%)",
+		text: "hsl(212, 11%, 23%)",
+	},
+};
 
-	// Define color schemes based on frontend's tailwind.css
-	const colors = {
-		dark: {
-			background: "linear-gradient(135deg, hsl(240, 6%, 7%) 0%, hsl(240, 6%, 12%) 100%)",
-			borderColor: "hsl(212, 8%, 64%)",
-			buttonGradient: "linear-gradient(to right, hsl(43, 67%, 50%), hsl(43, 91%, 25%))",
-			cardBackground:
-				"linear-gradient(135deg, hsla(215, 17%, 25%, 0.2) 0%, hsla(215, 17%, 25%, 0.1) 100%)",
-			headerText: "hsl(43, 67%, 50%)",
-			labelText: "hsl(34, 10%, 58%)",
-			text: "hsl(34, 5%, 71%)",
-		},
-		light: {
-			background: "linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(214, 32%, 91%) 100%)",
-			borderColor: "hsl(214, 32%, 91%)",
-			buttonGradient: "linear-gradient(to right, hsl(43, 100%, 55%), hsl(43, 100%, 65%))",
-			cardBackground:
-				"linear-gradient(135deg, hsla(215, 19%, 35%, 0.1) 0%, hsla(215, 19%, 35%, 0.05) 100%)",
-			headerText: "hsl(43, 100%, 55%)",
-			labelText: "hsl(0, 0%, 45%)",
-			text: "hsl(212, 11%, 23%)",
-		},
-	};
-
-	// eslint-disable-next-line ts-eslint/no-unnecessary-condition
-	const theme = isDarkMode ? colors.dark : colors.light;
+const verifyEmail = (data: VerifyEmailData) => {
+	const theme = colors.dark;
 
 	return RootLayout`
 		<div
@@ -249,4 +244,4 @@ const welcomeEmail = (data: WelcomeEmailData) => {
 	`;
 };
 
-export { welcomeEmail };
+export { verifyEmail };

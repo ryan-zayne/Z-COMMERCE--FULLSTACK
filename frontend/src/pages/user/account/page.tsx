@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 import { Button } from "@/components/primitives/button";
-import { sessionQuery } from "@/store/react-query/queryFactory";
+import { sessionQuery } from "@/store/react-query/queryOptions";
 
 function UserAccountPage() {
 	const sessionQueryResult = useQuery(sessionQuery());
@@ -23,21 +23,21 @@ function UserAccountPage() {
 						<div>
 							<span className="font-medium">Username:</span>
 							<p className="mt-[4px] text-gray-600 dark:text-gray-400">
-								{sessionQueryResult.data?.data?.user.username}
+								{sessionQueryResult.data?.data.user.username}
 							</p>
 						</div>
 
 						<div>
 							<span className="font-medium">Email:</span>
 							<p className="mt-[4px] text-gray-600 dark:text-gray-400">
-								{sessionQueryResult.data?.data?.user.email}
+								{sessionQueryResult.data?.data.user.email}
 							</p>
 						</div>
 
 						<div>
 							<span className="font-medium">Email Verified:</span>
 							<p className="mt-[4px] text-gray-600 dark:text-gray-400">
-								{sessionQueryResult.data?.data?.user.isEmailVerified ? "Yes" : "No"}
+								{sessionQueryResult.data?.data.user.isEmailVerified ? "Yes" : "No"}
 							</p>
 						</div>
 					</div>

@@ -10,7 +10,7 @@ import { Button } from "@/components/primitives/button";
 import { Form } from "@/components/primitives/form";
 import { ImageComponent } from "@/components/primitives/ImageComponent";
 import { callBackendApi } from "@/lib/api/callBackendApi";
-import { sessionQuery } from "@/store/react-query/queryFactory";
+import { sessionQuery } from "@/store/react-query/queryOptions";
 import { useShopStore } from "@/store/zustand/shopStore";
 
 const CheckoutSchema = z.object({
@@ -40,8 +40,8 @@ function CheckoutPage() {
 			address: "",
 			city: "",
 			country: "",
-			email: sessionQueryResult.data?.data?.user.email ?? "",
-			username: sessionQueryResult.data?.data?.user.username ?? "",
+			email: sessionQueryResult.data?.data.user.email ?? "",
+			username: sessionQueryResult.data?.data.user.username ?? "",
 			zipCode: "",
 		},
 	});
@@ -54,22 +54,19 @@ function CheckoutPage() {
 			return;
 		}
 
-		const payload = {
-			amount: totalPrice,
-			cartItems: cart.map((item) => ({
-				id: String(item.id),
-				name: item.title,
-				price: item.price,
-				quantity: item.quantity,
-			})),
-			customerEmail: formData.email,
-			customerId: sessionQueryResult.data.data?.user.id ?? "",
-			redirectURL: `${window.location.origin}/checkout/success`,
-		};
-
-		const result = await callBackendApi<{ paymentUrl: string }>("/payment/paystack/initialize", {
-			body: payload,
-			method: "POST",
+		const result = await callBackendApi("@post/payment/paystack/initialize", {
+			body: {
+				amount: totalPrice,
+				cartItems: cart.map((item) => ({
+					id: String(item.id),
+					name: item.title,
+					price: item.price,
+					quantity: item.quantity,
+				})),
+				customerEmail: formData.email,
+				customerId: sessionQueryResult.data.data.user.id,
+				redirectURL: `${window.location.origin}/checkout/success`,
+			},
 		});
 
 		if (isHTTPError(result.error)) {
@@ -88,7 +85,7 @@ function CheckoutPage() {
 
 		cartActions.clearCart();
 
-		hardNavigate(result.data.data?.paymentUrl as string);
+		hardNavigate(result.data.data.paymentUrl);
 	});
 
 	if (cart.length === 0) {

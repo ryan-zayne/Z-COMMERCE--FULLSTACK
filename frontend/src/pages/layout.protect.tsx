@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { LoadingSpinner } from "@/components/primitives/LoadingSpinner";
-import { sessionQuery } from "@/store/react-query/queryFactory";
+import { sessionQuery } from "@/store/react-query/queryOptions";
 
 function ProtectionLayout() {
 	const navigate = useNavigate();

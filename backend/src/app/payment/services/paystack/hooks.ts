@@ -3,7 +3,7 @@ import { consola } from "consola";
 import type { Request } from "express";
 import type { z } from "zod";
 import { ENVIRONMENT } from "@/config/env";
-import { AppError, readValidatedBody } from "@/utils";
+import { AppError, getValidatedValue } from "@/utils";
 import type { PaymentSuccessPayload } from "./api";
 import { paystackApiSchema } from "./apiSchema";
 
@@ -26,11 +26,11 @@ export const paystackHook = async (req: Request, options: PaystackHookOptions) =
 		.digest("hex");
 
 	if (!Object.is(hash, req.headers["x-paystack-signature"])) {
-		throw new AppError(400, "Invalid Event signature");
+		throw new AppError({ code: 400, message: "Invalid Event signature" });
 	}
 
-	const validBody = readValidatedBody(
-		req,
+	const validBody = getValidatedValue(
+		req.body as never,
 		paystackApiSchema.routes["/transaction/verify/:reference"].data
 	);
 

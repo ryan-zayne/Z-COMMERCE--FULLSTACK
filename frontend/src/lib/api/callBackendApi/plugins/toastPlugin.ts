@@ -8,7 +8,7 @@ import { definePlugin, isHTTPError } from "@zayne-labs/callapi/utils";
 import { isBrowser } from "@zayne-labs/toolkit-core";
 import { isBoolean } from "@zayne-labs/toolkit-type-helpers";
 import { toast } from "sonner";
-import type { BaseApiErrorResponse, BaseApiSuccessResponse } from "../callBackendApi";
+import type { BaseApiErrorResponse, BaseApiSuccessResponse } from "../apiSchema";
 
 export type ToastPluginMeta = {
 	toast?: {

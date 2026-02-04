@@ -8,13 +8,13 @@ import { validateUserSession } from "./validateUserSession";
 const authMiddleware = catchAsync<{ user: HydratedDocument<UserType> }>(async (req, res, next) => {
 	const { zayneAccessToken, zayneRefreshToken } = req.signedCookies;
 
-	const { currentUser, newZayneAccessToken } = await validateUserSession({
+	const { currentUser, newZayneAccessTokenResult } = await validateUserSession({
 		zayneAccessToken,
 		zayneRefreshToken,
 	});
 
-	if (newZayneAccessToken) {
-		setCookie(res, "zayneAccessToken", newZayneAccessToken, {
+	if (newZayneAccessTokenResult) {
+		setCookie(res, "zayneAccessToken", newZayneAccessTokenResult, {
 			expires: new Date(Date.now() + ENVIRONMENT.ACCESS_JWT_EXPIRES_IN),
 		});
 	}

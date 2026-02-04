@@ -7,6 +7,7 @@ export type UserType = {
 	createdAt: Date;
 	email: string;
 	emailVerificationToken: string;
+	id: string;
 	ipAddress: string;
 	isDeleted: boolean;
 	isEmailVerified: boolean;

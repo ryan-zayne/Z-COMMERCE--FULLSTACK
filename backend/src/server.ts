@@ -13,7 +13,6 @@ import { corsOptions, helmetOptions, rateLimitOptions, setConnectionToDb } from 
 import { ENVIRONMENT } from "./config/env";
 import { errorHandler, notFoundHandler, validateWithZodGlobal } from "./middleware";
 import { swaggerRouter } from "./swagger";
-import { AppResponse } from "./utils";
 
 const app = express();
 
@@ -49,29 +48,7 @@ app.use(morgan("dev"));
 
 app.use("/api/docs", swaggerRouter);
 
-// Health Check
-/**
- * @swagger
- * /:
- *   get:
- *     summary: Health check endpoint
- *     tags: [Health]
- *     responses:
- *       200:
- *         description: Server is healthy
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: success
- *                 message:
- *                   type: string
- *                   example: Server is up and running
- */
-app.get("/", (_req, res) => AppResponse(res, 200, "Server is up and running"));
+app.get("/", (_req, res) => res.json({ message: "Server is up and running", status: "success" }));
 
 // Global request body validator
 app.use("/api/v1/*splat", validateWithZodGlobal);

@@ -5,16 +5,16 @@ import { errorCodes } from "../../constants";
 import { AppError } from "../../utils";
 
 const handleMongooseCastError = (error: MongooseError.CastError) => {
-	const message = `Invalid ${error.path} value "${error.value}".`;
+	const message = `Invalid ${error.path} value "${error.value as string}".`;
 
-	return new AppError(400, message);
+	return new AppError({ code: 400, message });
 };
 
 const handleMongooseValidationError = (error: MongooseError.ValidationError) => {
 	const errors = Object.values(error.errors).map((e) => e.message);
 
 	const message = `Invalid input data. ${errors.join(". ")}`;
-	return new AppError(400, message);
+	return new AppError({ code: 400, message });
 };
 
 const handleMongooseDuplicateFieldsError = (error: MongooseError) => {
@@ -22,17 +22,17 @@ const handleMongooseDuplicateFieldsError = (error: MongooseError) => {
 		"code" in error && error.code === 11000 && "keyValue" in error && error.keyValue;
 
 	if (!isDuplicateFieldError) {
-		return new AppError(errorCodes.SERVER_ERROR, error.message, { cause: error });
+		return new AppError({ cause: error, code: errorCodes.SERVER_ERROR, message: error.message });
 	}
 
 	if (!isObject(error.keyValue)) {
-		return new AppError(errorCodes.SERVER_ERROR, error.message, { cause: error });
+		return new AppError({ cause: error, code: errorCodes.SERVER_ERROR, message: error.message });
 	}
 
 	const firstKeyValueEntry = Object.entries(error.keyValue)[0];
 
 	if (!firstKeyValueEntry) {
-		return new AppError(errorCodes.SERVER_ERROR, error.message, { cause: error });
+		return new AppError({ cause: error, code: errorCodes.SERVER_ERROR, message: error.message });
 	}
 
 	// == Extract value from the error message if it matches a pattern
@@ -47,16 +47,24 @@ const handleMongooseDuplicateFieldsError = (error: MongooseError) => {
 		)
 		.join("");
 
-	return new AppError(409, `${formattedField} "${value}" has already been used!`, { cause: error });
+	return new AppError({
+		cause: error,
+		code: 409,
+		message: `${formattedField} "${value as string}" has already been used!`,
+	});
 };
 
-const handleTimeoutError = (error: Error) => new AppError(408, "Request timeout", { cause: error });
+const handleTimeoutError = (error: Error) => {
+	return new AppError({ cause: error, code: 408, message: "Request timeout" });
+};
 
-// prettier-ignore
-const handleJWTError = (error: jwt.JsonWebTokenError) => new AppError(401, "Invalid token!", { cause: error });
+const handleJWTError = (error: jwt.JsonWebTokenError) => {
+	return new AppError({ cause: error, code: 401, message: "Invalid token!" });
+};
 
-// prettier-ignore
-const handleJWTExpiredError = (error: jwt.TokenExpiredError) => new AppError(401, "Your token has expired!", { cause: error });
+const handleJWTExpiredError = (error: jwt.TokenExpiredError) => {
+	return new AppError({ cause: error, code: 401, message: " Your token has expired!" });
+};
 
 export const transformError = (error: AppError) => {
 	let modifiedError = error;
@@ -93,7 +101,6 @@ export const transformError = (error: AppError) => {
 		}
 
 		default: {
-			// Do nothing
 			break;
 		}
 	}

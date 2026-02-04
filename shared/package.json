@@ -6,6 +6,8 @@
 		"./*": "./src/*.ts"
 	},
 	"dependencies": {
+		"@zayne-labs/callapi": "1.11.46",
+		"@zayne-labs/toolkit-type-helpers": "^0.12.30",
 		"zod": "^4.3.6"
 	},
 	"devDependencies": {

@@ -1,24 +1,23 @@
 import { Timer } from "@ark-ui/react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Show } from "@zayne-labs/ui-react/common/show";
 import { useState } from "react";
 import { Button } from "@/components/primitives/button";
 import { IconBox } from "@/components/primitives/IconBox";
-import { callBackendApi } from "@/lib/api/callBackendApi";
-import { sessionQuery } from "@/store/react-query/queryFactory";
+import { resendVerificationEmailMutation } from "@/store/react-query/mutationOptions";
+import { sessionQuery } from "@/store/react-query/queryOptions";
 
 function VerifyEmailPage() {
 	const [isResendEmailDisabled, setIsResendEmailDisabled] = useState(true);
 
 	const sessionQueryResult = useQuery(sessionQuery());
 
-	const resendEmail = () => {
-		void callBackendApi("/auth/resend-verification", {
-			body: {
-				email: sessionQueryResult.data?.data?.user.email,
-			},
-			method: "POST",
-		});
+	const resentVerificationEmailMutationResult = useMutation(resendVerificationEmailMutation());
+
+	const resendVerificationEmail = () => {
+		if (!sessionQueryResult.data) return;
+
+		resentVerificationEmailMutationResult.mutate(sessionQueryResult.data.data.user.email);
 	};
 
 	return (
@@ -57,9 +56,10 @@ function VerifyEmailPage() {
 							<Button
 								className="text-[13px]"
 								theme="secondary"
-								disabled={isResendEmailDisabled}
+								isLoading={resentVerificationEmailMutationResult.isPending}
+								disabled={isResendEmailDisabled || resentVerificationEmailMutationResult.isPending}
 								onClick={() => {
-									resendEmail();
+									resendVerificationEmail();
 									context.restart();
 									setIsResendEmailDisabled(true);
 								}}
@@ -69,7 +69,7 @@ function VerifyEmailPage() {
 										Resend in <Timer.Item type="seconds" /> seconds
 									</Timer.Area>
 
-									<Show.Otherwise>Resend Email</Show.Otherwise>
+									<Show.Fallback>Resend Email</Show.Fallback>
 								</Show.Root>
 							</Button>
 						)}

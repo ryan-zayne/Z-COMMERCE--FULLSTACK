@@ -8,13 +8,13 @@ const verifyEmail = catchAsync<{ body: { token: string } }>(async (req, res) => 
 	const { token } = req.body;
 
 	if (!token) {
-		throw new AppError(422, "Token is required");
+		throw new AppError({ code: 422, message: "Token is required" });
 	}
 
 	const decodedEmailVerificationToken = decodeJwtToken(token, { secretKey: ENVIRONMENT.EMAIL_SECRET });
 
 	if (!decodedEmailVerificationToken.id) {
-		throw new AppError(400, "Invalid verification token");
+		throw new AppError({ code: 400, message: "Invalid verification token" });
 	}
 
 	const updatedUser = await UserModel.findByIdAndUpdate(
@@ -24,10 +24,13 @@ const verifyEmail = catchAsync<{ body: { token: string } }>(async (req, res) => 
 	);
 
 	if (!updatedUser) {
-		throw new AppError(400, "Verification failed!");
+		throw new AppError({ code: 400, message: "Verification failed!" });
 	}
 
-	return AppResponse(res, 200, "Account successfully verified!");
+	return AppResponse(res, {
+		data: null,
+		message: "Account successfully verified!",
+	});
 });
 
 export { verifyEmail };

@@ -1,2 +1,2 @@
-export * from "./redirectOn401ErrorPlugin";
+export * from "./authErrorRedirectPlugin";
 export * from "./toastPlugin";

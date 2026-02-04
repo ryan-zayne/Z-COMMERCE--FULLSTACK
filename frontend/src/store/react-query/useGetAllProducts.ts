@@ -1,5 +1,5 @@
 import { useQueries } from "@tanstack/react-query";
-import { productKeyEnum, productQuery } from "./queryFactory";
+import { productKeyEnum, productQuery } from "./queryOptions";
 
 const useGetAllProducts = () => {
 	const {

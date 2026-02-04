@@ -1,24 +1,6 @@
+import { InitializePaymentBodySchema } from "@z-commerce/shared/validation/backendApiSchema";
 import { defineSchema } from "@zayne-labs/callapi/utils";
 import { z } from "zod";
-
-export const InitializePaymentSchema = z.object({
-	amount: z.number().positive("Amount must be positive"),
-	cartItems: z.array(
-		z.object({
-			id: z.string(),
-			name: z.string(),
-			price: z.number().positive("Price must be positive"),
-			quantity: z.int().positive("Quantity must be a positive integer"),
-		})
-	),
-	customerEmail: z.email(),
-	customerId: z.string(),
-	redirectURL: z.url({ error: "Invalid redirect URL" }).optional(),
-});
-
-export const VerifyPaymentSchema = z.object({
-	reference: z.string(),
-});
 
 const BasePaystackResponseSchema = z.object({
 	data: z.unknown(),
@@ -36,7 +18,7 @@ export const PaystackInitTransactionResponseSchema = z.object({
 	}),
 });
 
-export const PaystackMetadataSchema = InitializePaymentSchema.pick({
+export const PaystackMetadataSchema = InitializePaymentBodySchema.pick({
 	cartItems: true,
 	customerId: true,
 });

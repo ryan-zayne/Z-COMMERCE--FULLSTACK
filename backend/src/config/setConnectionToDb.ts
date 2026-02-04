@@ -2,7 +2,7 @@ import { consola } from "consola";
 import mongoose from "mongoose";
 import { ENVIRONMENT } from "@/config/env";
 
-const setConnectionToDb = async () => {
+export const setConnectionToDb = async () => {
 	try {
 		const connect = await mongoose.connect(ENVIRONMENT.MONGO_URI, {
 			autoIndex: ENVIRONMENT.NODE_ENV === "production",
@@ -23,5 +23,3 @@ const setConnectionToDb = async () => {
 	});
 	/* eslint-enable ts-eslint/unbound-method, ts-eslint/no-deprecated */
 };
-
-export { setConnectionToDb };

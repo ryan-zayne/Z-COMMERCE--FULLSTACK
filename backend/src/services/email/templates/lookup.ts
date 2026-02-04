@@ -1,9 +1,9 @@
-import { welcomeEmail } from "./welcomeEmail";
+import { verifyEmail } from "./verificationEmail";
 
 export const TEMPLATES_LOOKUP = {
-	welcomeEmail: {
-		from: "DigitalGenie <donotreply@digitalgenie.me>",
-		subject: "Welcome to DigitalGenie",
-		template: welcomeEmail,
+	verifyEmail: {
+		from: "DigitalGenie <donotreply@digital-genie.me>",
+		subject: "Verify your email address",
+		template: verifyEmail,
 	},
 };

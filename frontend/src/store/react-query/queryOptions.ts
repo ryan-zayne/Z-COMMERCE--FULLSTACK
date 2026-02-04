@@ -1,13 +1,9 @@
 import { queryOptions } from "@tanstack/react-query";
-import type { CallApiExtraOptions } from "@zayne-labs/callapi";
 import { hardNavigate } from "@zayne-labs/toolkit-core";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import { toast } from "sonner";
-import {
-	callBackendApiForQuery,
-	type BaseApiSuccessResponse,
-	type SessionData,
-} from "@/lib/api/callBackendApi";
+import { callBackendApiForQuery } from "@/lib/api/callBackendApi";
+import { checkUserSessionForQuery } from "@/lib/api/callBackendApi/plugins/utils/session";
 import { callDummyApi } from "@/lib/api/callDummyApi";
 
 // TODO - Remove once you start serving the products from your backend
@@ -23,26 +19,10 @@ export const productKeyEnum = defineEnum([
 	...vehiclesProductKeys,
 ]);
 
-export const sessionQuery = (
-	options?: Pick<
-		CallApiExtraOptions<{ Data: BaseApiSuccessResponse<SessionData> }>,
-		"meta" | "onError" | "onRequestError" | "onResponseError" | "onSuccess"
-	>
-) => {
-	const sessionKey = ["session"];
-
+export const sessionQuery = () => {
 	return queryOptions({
-		queryFn: () => {
-			return callBackendApiForQuery<SessionData>("/auth/session", {
-				meta: { redirectOn401Error: false, ...options?.meta },
-				onError: options?.onError,
-				onRequestError: options?.onRequestError,
-				onResponseError: options?.onResponseError,
-				onSuccess: options?.onSuccess,
-			});
-		},
-		// eslint-disable-next-line tanstack-query/exhaustive-deps
-		queryKey: sessionKey,
+		queryFn: () => checkUserSessionForQuery(),
+		queryKey: ["session"],
 		retry: false,
 		staleTime: 1 * 60 * 1000,
 	});
@@ -64,10 +44,9 @@ export const verifyEmailQuery = (token: string | undefined) => {
 	return queryOptions({
 		enabled: Boolean(token),
 		queryFn: () => {
-			return callBackendApiForQuery("/auth/verify-email", {
+			return callBackendApiForQuery("@post/auth/verify-email", {
 				body: { token },
-				meta: { redirectOn401Error: false },
-				method: "POST",
+				meta: { auth: { skipErrorRedirect: true } },
 
 				onError: ({ error }) => {
 					toast.error(error.message);

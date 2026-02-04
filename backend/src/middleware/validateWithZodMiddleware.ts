@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { SigninBodySchema, SignupBodySchema } from "@/app/auth/services/validation";
-import { readValidatedBody } from "../utils";
+import { getValidatedValue } from "../utils";
 import { catchAsync } from "./catchAsyncErrors";
 
 const SCHEMA_LOOKUP = new Map<string, z.ZodType<Record<string, unknown>>>([
@@ -28,7 +28,7 @@ export const validateWithZodGlobal = catchAsync((req, res, next) => {
 
 export const validateWithZod = (schema: z.ZodType<Record<string, unknown>>) => {
 	const handler = catchAsync((req, _res, next) => {
-		const validatedBody = readValidatedBody(req, schema);
+		const validatedBody = getValidatedValue(req.body as never, schema);
 
 		req.body = validatedBody;
 

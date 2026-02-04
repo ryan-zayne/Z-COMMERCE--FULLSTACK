@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router";
 import { BarScaleIcon } from "@/components/icons";
 import { Button } from "@/components/primitives/button";
 import { IconBox } from "@/components/primitives/IconBox";
-import { verifyEmailQuery } from "@/store/react-query/queryFactory";
+import { verifyEmailQuery } from "@/store/react-query/queryOptions";
 
 function CheckVerificationTokenPage() {
 	const { token } = useParams();

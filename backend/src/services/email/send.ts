@@ -2,11 +2,11 @@ import { consola } from "consola";
 import nodemailer from "nodemailer";
 import { ENVIRONMENT } from "@/config/env";
 import { TEMPLATES_LOOKUP } from "./templates/lookup";
-import type { WelcomeEmailData } from "./templates/types";
+import type { VerifyEmailData } from "./templates/types";
 
 type EmailOptions = {
-	data: WelcomeEmailData;
-	type: "welcomeEmail";
+	data: VerifyEmailData;
+	type: "verifyEmail";
 };
 
 const transporter = nodemailer.createTransport({

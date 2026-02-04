@@ -1,9 +1,9 @@
-export type CommonData = {
-	name?: string;
+export type CommonFields = {
 	to: string;
 };
 
-export type WelcomeEmailData = CommonData & {
+export type VerifyEmailData = CommonFields & {
 	email: string;
+	name: string;
 	verificationLink: string;
 };

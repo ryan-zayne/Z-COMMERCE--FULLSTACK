@@ -1,4 +1,4 @@
-import { PaymentStatusEnum } from "@/constants";
+import { PaymentStatusEnum } from "@z-commerce/shared/validation/backendApiSchema";
 import { AppError, generateRandomUUID } from "@/utils";
 import { PaymentModel } from "../../model";
 import type { PaymentSuccessPayload } from "./api";
@@ -23,7 +23,10 @@ export const processPayment = async (payload: PaymentSuccessPayload) => {
 	);
 
 	if (!payment) {
-		throw new AppError(404, "Error processing payment");
+		throw new AppError({
+			code: 404,
+			message: "Error processing payment",
+		});
 	}
 
 	// == Sent email to user

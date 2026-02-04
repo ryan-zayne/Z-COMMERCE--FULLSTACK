@@ -1,59 +1,82 @@
-import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
-import { consola } from "consola";
+import { defineEnum, type UnionDiscriminator } from "@zayne-labs/toolkit-type-helpers";
 import jwt from "jsonwebtoken";
 import type { HydratedDocument } from "mongoose";
 import { UserModel } from "@/app/auth/model";
-import { decodeJwtToken, isTokenInWhitelist, type DecodedJwtPayload } from "@/app/auth/services/common";
+import type { generateAccessToken } from "@/app/auth/services/common";
+import { decodeJwtToken, isTokenInWhitelist } from "@/app/auth/services/token";
 import type { UserType } from "@/app/auth/types";
 import { ENVIRONMENT } from "@/config/env";
 import { AppError } from "@/utils";
 
-// Error messages
 const AUTH_ERROR_MESSAGES = defineEnum({
 	ACCOUNT_SUSPENDED: "Your account is currently suspended",
 	EMAIL_UNVERIFIED: "Your email is yet to be verified",
-	GENERIC_ERROR: "An error occurred, please log in again",
-	INVALID_TOKEN: "Invalid session. Please log in again!",
-	SESSION_EXPIRED: "Session expired, please log in again",
-	UNAUTHORIZED: "Unauthorized",
-	USER_NOT_FOUND: "User not found or not logged in",
+	GENERIC_ERROR: "An error occurred. Please log in again",
+	INVALID_SESSION: "Invalid session. Please log in again",
+	SESSION_EXPIRED: "Session expired. Please log in again",
+	SESSION_NOT_EXIST: "Session doesn't exist. Please log in",
 });
 
-/**
- * @description This function is used to verify that user status
- * @returns The current user
- */
-const getAndVerifyUserFromToken = async (decodedPayload: DecodedJwtPayload, zayneRefreshToken: string) => {
+type VerifyOptions = UnionDiscriminator<
+	[
+		{
+			variant: "accessToken";
+			zayneAccessToken: string;
+			zayneRefreshToken: string;
+		},
+		{
+			variant: "refreshToken";
+			zayneRefreshToken: string;
+		},
+	]
+>;
+
+const getAndVerifyUserFromToken = async (options: VerifyOptions) => {
+	const { variant, zayneAccessToken, zayneRefreshToken } = options;
+
+	const decodedPayload =
+		variant === "accessToken" ?
+			decodeJwtToken(zayneAccessToken, { secretKey: ENVIRONMENT.ACCESS_SECRET })
+		:	decodeJwtToken(zayneRefreshToken, { secretKey: ENVIRONMENT.REFRESH_SECRET });
+
 	const currentUser = await UserModel.findById(decodedPayload.id).select([
 		"+refreshTokenArray",
 		"+isEmailVerified",
 		"+isSuspended",
 	]);
 
-	// == Check if user exists
 	if (!currentUser) {
-		throw new AppError(404, AUTH_ERROR_MESSAGES.USER_NOT_FOUND);
+		throw new AppError({
+			code: 401,
+			message: AUTH_ERROR_MESSAGES.SESSION_NOT_EXIST,
+		});
 	}
 
 	// == At this point, the refresh token is still valid but is not in the refreshTokenArray (whitelist)
 	// == So it can be seen as a token reuse situation
-	// == So log out the user from all devices to greatly diminish the risk of another token reuse attack
+	// == So clear the refreshTokenArray to log out the user from all devices including current device, greatly diminishing the risk of another token reuse attack
 
 	if (!isTokenInWhitelist(currentUser.refreshTokenArray, zayneRefreshToken)) {
-		consola.warn("Possible token reuse detected!");
-		consola.trace({ timestamp: new Date().toISOString(), userId: currentUser._id.toString() });
-
 		await currentUser.updateOne({ refreshTokenArray: [] });
 
-		throw new AppError(401, AUTH_ERROR_MESSAGES.INVALID_TOKEN);
+		throw new AppError({
+			code: 401,
+			message: AUTH_ERROR_MESSAGES.INVALID_SESSION,
+		});
 	}
 
 	if (currentUser.isSuspended) {
-		throw new AppError(401, AUTH_ERROR_MESSAGES.ACCOUNT_SUSPENDED);
+		throw new AppError({
+			code: 401,
+			message: AUTH_ERROR_MESSAGES.ACCOUNT_SUSPENDED,
+		});
 	}
 
 	if (!currentUser.isEmailVerified) {
-		throw new AppError(422, AUTH_ERROR_MESSAGES.EMAIL_UNVERIFIED);
+		throw new AppError({
+			code: 422,
+			message: AUTH_ERROR_MESSAGES.EMAIL_UNVERIFIED,
+		});
 	}
 
 	// TODO csrf protection
@@ -62,35 +85,49 @@ const getAndVerifyUserFromToken = async (decodedPayload: DecodedJwtPayload, zayn
 	return currentUser;
 };
 
+type NewSession = {
+	currentUser: HydratedDocument<UserType>;
+	newZayneAccessTokenResult: ReturnType<typeof generateAccessToken>;
+};
+
 /**
  * @description This function is used to validate the refresh token and generate a new access token
  */
-const refreshUserSession = async (zayneRefreshToken: string) => {
+export const refreshUserSession = async (zayneRefreshToken: string): Promise<NewSession> => {
 	try {
-		const decodedRefreshPayload = decodeJwtToken(zayneRefreshToken, {
-			secretKey: ENVIRONMENT.REFRESH_SECRET,
-		});
+		const currentUser = await getAndVerifyUserFromToken({ variant: "refreshToken", zayneRefreshToken });
 
-		const currentUser = await getAndVerifyUserFromToken(decodedRefreshPayload, zayneRefreshToken);
-
-		const newZayneAccessToken = currentUser.generateAccessToken();
+		const newZayneAccessTokenResult = currentUser.generateAccessToken();
 
 		return {
 			currentUser,
-			newZayneAccessToken,
+			newZayneAccessTokenResult,
 		};
 	} catch (error) {
 		// == If the refresh token is invalid, throw an error
 		if (error instanceof jwt.JsonWebTokenError || error instanceof jwt.TokenExpiredError) {
-			throw new AppError(401, AUTH_ERROR_MESSAGES.SESSION_EXPIRED, { cause: error });
+			throw new AppError({
+				cause: error,
+				code: 401,
+				message: AUTH_ERROR_MESSAGES.SESSION_EXPIRED,
+			});
 		}
 
-		if (error instanceof AppError) {
+		if (AppError.isError(error)) {
 			throw error;
 		}
 
-		throw new AppError(401, AUTH_ERROR_MESSAGES.GENERIC_ERROR, { cause: error });
+		throw new AppError({
+			cause: error,
+			code: 401,
+			message: AUTH_ERROR_MESSAGES.GENERIC_ERROR,
+		});
 	}
+};
+
+type ExistingSession = {
+	currentUser: HydratedDocument<UserType>;
+	newZayneAccessTokenResult: null;
 };
 
 type TokenPairFromCookies = {
@@ -98,28 +135,23 @@ type TokenPairFromCookies = {
 	zayneRefreshToken: string | undefined;
 };
 
-type AuthenticatedSession =
-	| {
-			currentUser: HydratedDocument<UserType>;
-			newZayneAccessToken: null;
-	  }
-	| {
-			currentUser: HydratedDocument<UserType>;
-			newZayneAccessToken: string;
-	  };
-
 /**
  * @description Main authentication function that validates or refreshes user sessions
  * Handles both initial authentication and token refresh scenarios
  */
-const validateUserSession = async (tokens: TokenPairFromCookies): Promise<AuthenticatedSession> => {
+const validateUserSession = async (
+	tokens: TokenPairFromCookies
+): Promise<ExistingSession | NewSession> => {
 	const { zayneAccessToken, zayneRefreshToken } = tokens;
 
 	if (!zayneRefreshToken) {
-		throw new AppError(401, AUTH_ERROR_MESSAGES.UNAUTHORIZED);
+		throw new AppError({
+			code: 401,
+			message: AUTH_ERROR_MESSAGES.SESSION_NOT_EXIST,
+		});
 	}
 
-	// == If access token is not present, verify the refresh token and generate new tokens
+	// == If access token is not present, verify the refresh token and generate new session
 	if (!zayneAccessToken) {
 		const newSession = await refreshUserSession(zayneRefreshToken);
 
@@ -127,30 +159,34 @@ const validateUserSession = async (tokens: TokenPairFromCookies): Promise<Authen
 	}
 
 	try {
-		// == Validate existing session
-		const decodedAccessPayload = decodeJwtToken(zayneAccessToken, {
-			secretKey: ENVIRONMENT.ACCESS_SECRET,
+		const currentUser = await getAndVerifyUserFromToken({
+			variant: "accessToken",
+			zayneAccessToken,
+			zayneRefreshToken,
 		});
 
-		const currentUser = await getAndVerifyUserFromToken(decodedAccessPayload, zayneRefreshToken);
-
+		// == Return Existing session if accessToken is still valid
 		return {
 			currentUser,
-			newZayneAccessToken: null,
+			newZayneAccessTokenResult: null,
 		};
 	} catch (error) {
-		// == Attempt session renewal if the error indicates that the access token is invalid / expired
+		// == Attempt to generate new session if the error indicates that the access token is invalid / expired
 		if (error instanceof jwt.JsonWebTokenError || error instanceof jwt.TokenExpiredError) {
 			const newSession = await refreshUserSession(zayneRefreshToken);
 
 			return newSession;
 		}
 
-		if (error instanceof AppError) {
+		if (AppError.isError(error)) {
 			throw error;
 		}
 
-		throw new AppError(401, AUTH_ERROR_MESSAGES.GENERIC_ERROR, { cause: error });
+		throw new AppError({
+			cause: error,
+			code: 401,
+			message: AUTH_ERROR_MESSAGES.GENERIC_ERROR,
+		});
 	}
 };
 
