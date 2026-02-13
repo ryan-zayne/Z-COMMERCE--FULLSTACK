@@ -1,12 +1,13 @@
+import { moniconLocalIcons } from "@@/.monicon/icons";
+import type { iconsArray } from "@@/config/monicon/icon-constant";
 import { Icon as IconifyIcon, type IconifyIcon as IconifyIconType, type IconProps } from "@iconify/react";
-import { camelCasedProps, getIconDetails, type MoniconProps } from "@monicon/icon-loader";
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";
-import { isString } from "@zayne-labs/toolkit-type-helpers";
 import { useMemo } from "react";
-import type { icons } from "../icons/icon-constant";
 
-export type MoniconIconBoxProps = InferProps<"svg">
-	& Omit<MoniconProps, "name"> & { icon: typeof icons.$inferUnion; type?: "local" };
+export type MoniconIconBoxProps = InferProps<"svg"> & {
+	icon: typeof iconsArray.$inferUnion;
+	type?: "local";
+};
 
 type IconifyIconBoxProps = Omit<IconProps, "icon"> & {
 	icon: string | IconifyIconType;
@@ -20,7 +21,6 @@ export function IconBox(props: IconBoxProps) {
 
 	switch (type) {
 		case "local": {
-			if (!isString(icon)) return;
 			return <Monicon icon={icon as never} {...(restOfProps as object)} />;
 		}
 
@@ -35,30 +35,18 @@ export function IconBox(props: IconBoxProps) {
 }
 
 export function Monicon(props: Omit<MoniconIconBoxProps, "type">) {
-	const { color, icon, size, strokeWidth, ...restOfProps } = props;
+	const { height, icon, width, ...restOfProps } = props;
 
-	const details = useMemo(
-		() =>
-			getIconDetails({
-				color,
-				name: icon,
-				size,
-				strokeWidth,
-			}),
-		[color, icon, size, strokeWidth]
-	);
-
-	const attributes = useMemo(
-		() => camelCasedProps(details.attributes) as Record<string, unknown>,
-		[details.attributes]
-	);
+	const details = useMemo(() => moniconLocalIcons[icon], [icon]);
 
 	return (
 		<svg
-			{...attributes}
+			viewBox={`0 0 ${details.width} ${details.height}`}
+			width={width ?? 16}
+			height={height ?? 16}
 			{...restOfProps}
 			// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
-			dangerouslySetInnerHTML={{ __html: details.innerHtml }}
+			dangerouslySetInnerHTML={{ __html: details.svgBody }}
 		/>
 	);
 }

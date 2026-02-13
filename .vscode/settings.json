@@ -1,6 +1,10 @@
 {
 	"typescript.tsdk": "node_modules\\typescript\\lib",
+	"files.readonlyInclude": {
+		"**/.monicon/*": true
+	},
 	"cSpell.words": [
+		"Monicon",
 		"Paystack",
 		"rolldown",
 		"shadcn",
