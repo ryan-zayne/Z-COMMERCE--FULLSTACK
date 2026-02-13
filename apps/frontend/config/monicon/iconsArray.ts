@@ -1,6 +1,6 @@
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 
-export const iconsArray = defineEnum(
+const iconsArray = defineEnum(
 	[
 		"basil:caret-down-outline",
 		"bi:chevron-double-right",
@@ -45,3 +45,5 @@ export const iconsArray = defineEnum(
 	],
 	{ inferredUnionVariant: "values" }
 );
+
+export { iconsArray };

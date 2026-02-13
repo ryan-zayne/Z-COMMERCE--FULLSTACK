@@ -1,5 +1,5 @@
 import { moniconLocalIcons } from "@@/.monicon/icons";
-import type { iconsArray } from "@@/config/monicon/icon-constant";
+import type { iconsArray } from "@@/config/monicon/iconsArray";
 import { Icon as IconifyIcon, type IconifyIcon as IconifyIconType, type IconProps } from "@iconify/react";
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";
 import { useMemo } from "react";

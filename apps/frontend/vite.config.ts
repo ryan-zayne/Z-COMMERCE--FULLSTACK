@@ -4,8 +4,8 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import viteTsconfigPaths from "vite-tsconfig-paths";
-import { iconsArray } from "./config/monicon/icon-constant";
 import { iconFilePlugin } from "./config/monicon/iconFilePlugin";
+import { iconsArray } from "./config/monicon/iconsArray";
 
 export default defineConfig({
 	plugins: [
