@@ -2,7 +2,7 @@
 	"name": "@z-commerce/root",
 	"type": "module",
 	"version": "1.0.0",
-	"packageManager": "pnpm@10.28.2",
+	"packageManager": "pnpm@10.29.2",
 	"scripts": {
 		"dev:backend": "pnpm --filter @z-commerce/backend dev",
 		"dev:frontend": "pnpm --filter @z-commerce/frontend dev",

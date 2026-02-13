@@ -62,4 +62,3 @@ export function Monicon(props: Omit<MoniconIconBoxProps, "type">) {
 		/>
 	);
 }
-
