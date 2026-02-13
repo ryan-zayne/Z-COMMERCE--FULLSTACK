@@ -70,7 +70,7 @@ export const sendVerificationEmail = async (user: HydratedUserType) => {
 			email: user.email,
 			name: user.username,
 			to: user.email,
-			verificationLink: `${getDomainReferer()}/auth/verify-email/${emailVerificationToken}`,
+			verificationLink: `${getDomainReferer()}/auth/verify-email/token?token=${emailVerificationToken}`,
 		},
 		type: "verifyEmail",
 	});

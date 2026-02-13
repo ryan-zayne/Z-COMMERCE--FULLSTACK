@@ -59,8 +59,8 @@ const routes = createRoutesFromElements(
 					Component={lazy(() => import("@/pages/auth/verify-email/page"))}
 				/>
 				<Route
-					path="/auth/verify-email/:token"
-					Component={lazy(() => import("@/pages/auth/verify-email/[token]/page"))}
+					path="/auth/verify-email/token"
+					Component={lazy(() => import("@/pages/auth/verify-email/token/page"))}
 				/>
 				<Route
 					path="/auth/verify-email/success"

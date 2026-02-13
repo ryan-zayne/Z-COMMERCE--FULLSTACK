@@ -12,3 +12,16 @@ export const resendVerificationEmailMutation = () => {
 		mutationKey: ["auth", "resend-verification"],
 	});
 };
+
+export const verifyEmailMutation = () => {
+	return mutationOptions({
+		mutationFn: (token: string) => {
+			return callBackendApiForQuery("@post/auth/verify-email", {
+				body: { token },
+				meta: { auth: { skipErrorRedirect: true } },
+			});
+		},
+		mutationKey: ["auth", "verify-email"],
+		retry: false,
+	});
+};
