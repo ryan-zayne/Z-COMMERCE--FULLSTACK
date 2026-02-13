@@ -1,9 +1,9 @@
 import { assertDefined } from "@zayne-labs/toolkit-type-helpers";
 import { Link } from "react-router";
-import { Button } from "@/components/primitives/button";
-import { IconBox } from "@/components/primitives/IconBox";
-import { LoadingSkeleton } from "@/components/ui/LoadingSkeleton";
-import { ProductCard } from "@/components/ui/ProductCard";
+import { IconBox } from "@/components/common/IconBox";
+import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
+import { ProductCard } from "@/components/common/ProductCard";
+import { Button } from "@/components/ui/button";
 import { useGetAllProducts } from "@/store/react-query/useGetAllProducts";
 
 function AllProductsPage() {

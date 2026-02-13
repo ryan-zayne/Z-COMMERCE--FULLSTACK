@@ -1,5 +1,5 @@
-import { IconBox } from "@/components/primitives/IconBox";
-import { ImageComponent } from "@/components/primitives/ImageComponent";
+import { IconBox } from "@/components/common/IconBox";
+import { ImageComponent } from "@/components/common/ImageComponent";
 import { Carousel, type CarouselRootProps } from "@/components/ui/carousel";
 
 type ItemHeroProps = {

@@ -72,11 +72,11 @@ importers:
         specifier: 1.11.46
         version: 1.11.46
       '@zayne-labs/toolkit-core':
-        specifier: ^0.12.38
-        version: 0.12.38
+        specifier: ^0.12.41
+        version: 0.12.41
       '@zayne-labs/toolkit-type-helpers':
-        specifier: ^0.12.38
-        version: 0.12.38
+        specifier: ^0.12.41
+        version: 0.12.41
       '@zayne-labs/tsconfig':
         specifier: ^0.11.27
         version: 0.11.27
@@ -197,16 +197,16 @@ importers:
         version: 1.11.46
       '@zayne-labs/callapi-plugins':
         specifier: ^4.0.46
-        version: 4.0.46(@zayne-labs/callapi@1.11.46)(@zayne-labs/toolkit-type-helpers@0.12.38)(consola@3.4.2)
+        version: 4.0.46(@zayne-labs/callapi@1.11.46)(@zayne-labs/toolkit-type-helpers@0.12.41)(consola@3.4.2)
       '@zayne-labs/toolkit-core':
-        specifier: ^0.12.38
-        version: 0.12.38
+        specifier: ^0.12.41
+        version: 0.12.41
       '@zayne-labs/toolkit-react':
-        specifier: ^0.12.38
-        version: 0.12.38(@types/react@19.2.14)(react@19.2.4)(tailwind-merge@3.4.0)(zustand@5.0.11(@types/react@19.2.14)(react@19.2.4))
+        specifier: ^0.12.41
+        version: 0.12.41(@types/react@19.2.14)(react@19.2.4)(tailwind-merge@3.4.0)(zustand@5.0.11(@types/react@19.2.14)(react@19.2.4))
       '@zayne-labs/toolkit-type-helpers':
-        specifier: ^0.12.38
-        version: 0.12.38
+        specifier: ^0.12.41
+        version: 0.12.41
       '@zayne-labs/ui-react':
         specifier: 0.10.51
         version: 0.10.51(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.71.1(react@19.2.4))(react@19.2.4)(tailwind-merge@3.4.0)(tailwindcss@4.1.18)(zustand@5.0.11(@types/react@19.2.14)(react@19.2.4))
@@ -219,9 +219,6 @@ importers:
       react-hook-form:
         specifier: ^7.71.1
         version: 7.71.1(react@19.2.4)
-      react-loading-skeleton:
-        specifier: ^3.5.0
-        version: 3.5.0(react@19.2.4)
       react-router:
         specifier: ^7.13.0
         version: 7.13.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -326,8 +323,8 @@ importers:
         specifier: 1.11.46
         version: 1.11.46
       '@zayne-labs/toolkit-type-helpers':
-        specifier: ^0.12.38
-        version: 0.12.38
+        specifier: ^0.12.41
+        version: 0.12.41
       zod:
         specifier: ^4.3.6
         version: 4.3.6
@@ -1952,8 +1949,8 @@ packages:
     resolution: {integrity: sha512-qU5iBz35LPYn3iawexl1yJQ8u3BFJ9F/J6KTfJks8eC7r1/xCrqabhjVIkkXsjuGWQPiaONKW6ieubR3abBezA==}
     engines: {node: '>=18.x'}
 
-  '@zayne-labs/toolkit-core@0.12.38':
-    resolution: {integrity: sha512-GaMZtcwk6OHqwhyq6g9V/HIb0XlVO+zjDfFud5/gXJY/eK3g9Wjt7zPWbALBxIfvnwXfknBfegkIEECWbz+ThA==}
+  '@zayne-labs/toolkit-core@0.12.41':
+    resolution: {integrity: sha512-TGdOUYe3xkLSZGNVDE6BpiVXl0hkVyGosvjdn0NjeDv0JO6YH7SMHObiorZlKcBdnuUJASsgoPOwuS1lyBNSXA==}
     engines: {node: '>=18.x'}
 
   '@zayne-labs/toolkit-react@0.12.36':
@@ -1972,8 +1969,8 @@ packages:
       zustand:
         optional: true
 
-  '@zayne-labs/toolkit-react@0.12.38':
-    resolution: {integrity: sha512-+ltMnuKX9CrkWkk2WCJwo+9Qy4rNXOD8eEf0M+sbI6NoIa0jDRLRMmez/0UZSRrlsrFUL/BOSWnse4B8RtaYLQ==}
+  '@zayne-labs/toolkit-react@0.12.41':
+    resolution: {integrity: sha512-/F6kQ2YhL3UzPoGhJdR9a08VYlZLolmwuK6zJZF/EKqTaiFnlpa+LxiMVEAX5IQS6XK0ARKA8iLe5tgcTigsuQ==}
     engines: {node: '>=18.x'}
     peerDependencies:
       '@types/react': '>=19.0.0'
@@ -1996,8 +1993,8 @@ packages:
     resolution: {integrity: sha512-22Xx/LdELsaLe7/L3IQSwUAChj1o7mYNHLnMlKvRpscu/HtSZwHQufRJfEpsiYt6RUzyKpCqczva4G1Nz74xBg==}
     engines: {node: '>=18.x'}
 
-  '@zayne-labs/toolkit-type-helpers@0.12.38':
-    resolution: {integrity: sha512-KEmEUP7o8JD+se54gGyyoBbgEf/CPApsXOY7Dq1UykYEoRA8uBUDPhhP8IaS57i8nuFflYVCkdOj3nuBgvKPNg==}
+  '@zayne-labs/toolkit-type-helpers@0.12.41':
+    resolution: {integrity: sha512-PQZyo+yDDnnWQ8uQvpYgtJWEFiQIa5QfFjJTvNimWfEnp/JceOuOPGZhqakRHv7PSCUZIK9bm1VOxjVbyO6qGw==}
     engines: {node: '>=18.x'}
 
   '@zayne-labs/tsconfig@0.11.27':
@@ -3854,11 +3851,6 @@ packages:
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
-
-  react-loading-skeleton@3.5.0:
-    resolution: {integrity: sha512-gxxSyLbrEAdXTKgfbpBEFZCO/P153DnqSCQau2+o6lNy1jgMRr2MmRmOzMmyrwSaSYLRB8g7b0waYPmUjz7IhQ==}
-    peerDependencies:
-      react: '>=16.8.0'
 
   react-refresh@0.18.0:
     resolution: {integrity: sha512-QgT5//D3jfjJb6Gsjxv0Slpj23ip+HtOpnNgnb2S5zU3CB26G/IDPGoy4RJB42wzFE46DRsstbW6tKHoKbhAxw==}
@@ -6374,10 +6366,10 @@ snapshots:
 
   '@zag-js/utils@1.33.1': {}
 
-  '@zayne-labs/callapi-plugins@4.0.46(@zayne-labs/callapi@1.11.46)(@zayne-labs/toolkit-type-helpers@0.12.38)(consola@3.4.2)':
+  '@zayne-labs/callapi-plugins@4.0.46(@zayne-labs/callapi@1.11.46)(@zayne-labs/toolkit-type-helpers@0.12.41)(consola@3.4.2)':
     dependencies:
       '@zayne-labs/callapi': 1.11.46
-      '@zayne-labs/toolkit-type-helpers': 0.12.38
+      '@zayne-labs/toolkit-type-helpers': 0.12.41
       consola: 3.4.2
 
   '@zayne-labs/callapi@1.11.46': {}
@@ -6448,9 +6440,9 @@ snapshots:
     dependencies:
       '@zayne-labs/toolkit-type-helpers': 0.12.36
 
-  '@zayne-labs/toolkit-core@0.12.38':
+  '@zayne-labs/toolkit-core@0.12.41':
     dependencies:
-      '@zayne-labs/toolkit-type-helpers': 0.12.38
+      '@zayne-labs/toolkit-type-helpers': 0.12.41
 
   '@zayne-labs/toolkit-react@0.12.36(@types/react@19.2.14)(react@19.2.4)(tailwind-merge@3.4.0)(zustand@5.0.11(@types/react@19.2.14)(react@19.2.4))':
     dependencies:
@@ -6462,10 +6454,10 @@ snapshots:
       react: 19.2.4
       zustand: 5.0.11(@types/react@19.2.14)(react@19.2.4)
 
-  '@zayne-labs/toolkit-react@0.12.38(@types/react@19.2.14)(react@19.2.4)(tailwind-merge@3.4.0)(zustand@5.0.11(@types/react@19.2.14)(react@19.2.4))':
+  '@zayne-labs/toolkit-react@0.12.41(@types/react@19.2.14)(react@19.2.4)(tailwind-merge@3.4.0)(zustand@5.0.11(@types/react@19.2.14)(react@19.2.4))':
     dependencies:
-      '@zayne-labs/toolkit-core': 0.12.38
-      '@zayne-labs/toolkit-type-helpers': 0.12.38
+      '@zayne-labs/toolkit-core': 0.12.41
+      '@zayne-labs/toolkit-type-helpers': 0.12.41
       tailwind-merge: 3.4.0
     optionalDependencies:
       '@types/react': 19.2.14
@@ -6476,7 +6468,7 @@ snapshots:
 
   '@zayne-labs/toolkit-type-helpers@0.12.36': {}
 
-  '@zayne-labs/toolkit-type-helpers@0.12.38': {}
+  '@zayne-labs/toolkit-type-helpers@0.12.41': {}
 
   '@zayne-labs/tsconfig@0.11.27': {}
 
@@ -8483,10 +8475,6 @@ snapshots:
       react: 19.2.4
 
   react-is@16.13.1: {}
-
-  react-loading-skeleton@3.5.0(react@19.2.4):
-    dependencies:
-      react: 19.2.4
 
   react-refresh@0.18.0: {}
 

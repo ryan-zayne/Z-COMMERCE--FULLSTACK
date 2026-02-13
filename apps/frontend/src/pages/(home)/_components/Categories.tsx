@@ -1,7 +1,7 @@
 import { m } from "motion/react";
 import { Link } from "react-router";
-import { Button } from "@/components/primitives/button";
 import { getElementList } from "@/components/primitives/for";
+import { Button } from "@/components/ui/button";
 import { cnJoin } from "@/lib/utils/cn";
 import { useThemeStore } from "@/store/zustand/themeStore";
 

@@ -2,8 +2,8 @@ import { Timer } from "@ark-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Show } from "@zayne-labs/ui-react/common/show";
 import { useState } from "react";
-import { Button } from "@/components/primitives/button";
-import { IconBox } from "@/components/primitives/IconBox";
+import { IconBox } from "@/components/common/IconBox";
+import { Button } from "@/components/ui/button";
 import { resendVerificationEmailMutation } from "@/store/react-query/mutationOptions";
 import { sessionQuery } from "@/store/react-query/queryOptions";
 

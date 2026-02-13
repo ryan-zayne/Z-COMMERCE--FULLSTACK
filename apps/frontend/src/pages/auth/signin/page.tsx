@@ -1,8 +1,8 @@
 import { AnimatePresence, m } from "motion/react";
 import { Link, useLocation } from "react-router";
-import { Button } from "@/components/primitives/button";
-import { IconBox } from "@/components/primitives/IconBox";
-import { Logo } from "@/components/primitives/Logo";
+import { IconBox } from "@/components/common/IconBox";
+import { Logo } from "@/components/common/Logo";
+import { Button } from "@/components/ui/button";
 import { useGlobalStore } from "@/store/zustand/globalStore";
 import { SharedForm } from "../components";
 

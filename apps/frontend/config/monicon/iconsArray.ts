@@ -42,6 +42,7 @@ const iconsArray = defineEnum(
 		"ri:menu-3-fill",
 		"tabler:trash-filled",
 		"typcn:arrow-back",
+		"svg-spinners:bars-scale",
 	],
 	{ inferredUnionVariant: "values" }
 );

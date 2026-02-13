@@ -1,7 +1,7 @@
-import { Outlet, ScrollRestoration, useLocation } from "react-router";
-import { Footer } from "@/components/ui/Footer";
-import { Navbar } from "@/components/ui/Navbar";
-import { ScrollToTopButton } from "@/components/ui/ScrollToTopButton";
+import { Outlet, useLocation } from "react-router";
+import { ScrollToTopButton } from "@/components/common/ScrollToTopButton";
+import { Footer } from "./_components/Footer";
+import { Navbar } from "./_components/Navbar";
 
 function HomeLayout() {
 	const href = useLocation().pathname;
@@ -10,7 +10,6 @@ function HomeLayout() {
 
 	return (
 		<>
-			<ScrollRestoration />
 			<ScrollToTopButton />
 			<Navbar />
 			<Outlet />

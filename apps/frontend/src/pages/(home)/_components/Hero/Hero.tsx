@@ -1,12 +1,12 @@
 import { useAnimateElementRefs } from "@zayne-labs/toolkit-react";
-import { Button } from "@/components/primitives/button";
-import { IconBox } from "@/components/primitives/IconBox";
-import { ImageComponent } from "@/components/primitives/ImageComponent";
+import { IconBox } from "@/components/common/IconBox";
+import { ImageComponent } from "@/components/common/ImageComponent";
+import { Button } from "@/components/ui/button";
 import { Carousel } from "@/components/ui/carousel";
 import { slideImages } from "./images";
 
 function Hero() {
-	const { animatedElements, handleElementsAnimation } = useAnimateElementRefs([
+	const { handleElementsAnimation, setAnimatedNode } = useAnimateElementRefs([
 		{
 			animationClass: "animate-fade-in-down",
 			targetElement: "heading",
@@ -65,9 +65,7 @@ function Hero() {
 						lg:mt-[80px] lg:ml-[360px]"
 				>
 					<h1
-						ref={(node) => {
-							animatedElements.heading = node;
-						}}
+						ref={setAnimatedNode("heading")}
 						className="w-[17ch] font-roboto text-[clamp(20px,4vw+10px,30px)] font-semibold
 							text-heading"
 					>
@@ -75,9 +73,7 @@ function Hero() {
 					</h1>
 
 					<p
-						ref={(node) => {
-							animatedElements.paragraph = node;
-						}}
+						ref={setAnimatedNode("paragraph")}
 						className="z-20 my-[10px_30px] w-[30ch] text-[clamp(13px,1vw+10px,17px)]
 							md:my-[18px_37px] lg:w-[40ch] lg:text-[clamp(15px,1vw+10px,20px)]"
 					>
@@ -86,9 +82,7 @@ function Hero() {
 					</p>
 
 					<Button
-						ref={(node) => {
-							animatedElements.button = node;
-						}}
+						ref={setAnimatedNode("button")}
 						theme="secondary"
 						className="z-50 text-[clamp(13px,1vw+10px,17px)] font-semibold transition-shadow
 							duration-400 hover:[box-shadow:0_10px_20px_hsl(43,100%,55%,0.4)] active:scale-[1.04]

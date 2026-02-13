@@ -1,11 +1,10 @@
-import { moniconLocalIcons } from "@@/.monicon/icons";
-import type { iconsArray } from "@@/config/monicon/iconsArray";
+import { getMoniconProps, type MoniconIconNameType } from "@@/config/monicon/utils";
 import { Icon as IconifyIcon, type IconifyIcon as IconifyIconType, type IconProps } from "@iconify/react";
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";
 import { useMemo } from "react";
 
 export type MoniconIconBoxProps = InferProps<"svg"> & {
-	icon: typeof iconsArray.$inferUnion;
+	icon: MoniconIconNameType;
 	type?: "local";
 };
 
@@ -35,18 +34,16 @@ export function IconBox(props: IconBoxProps) {
 }
 
 export function Monicon(props: Omit<MoniconIconBoxProps, "type">) {
-	const { height, icon, width, ...restOfProps } = props;
+	const { icon, ...restOfProps } = props;
 
-	const details = useMemo(() => moniconLocalIcons[icon], [icon]);
+	const { svgInnerHTML, ...restOfMoniconProps } = useMemo(() => getMoniconProps(icon), [icon]);
 
 	return (
 		<svg
-			viewBox={`0 0 ${details.width} ${details.height}`}
-			width={width ?? 16}
-			height={height ?? 16}
+			{...restOfMoniconProps}
 			{...restOfProps}
 			// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
-			dangerouslySetInnerHTML={{ __html: details.svgBody }}
+			dangerouslySetInnerHTML={{ __html: svgInnerHTML }}
 		/>
 	);
 }

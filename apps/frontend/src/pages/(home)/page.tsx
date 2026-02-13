@@ -1,5 +1,5 @@
+import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
 import { Show } from "@/components/primitives/show";
-import { LoadingSkeleton } from "@/components/ui/LoadingSkeleton";
 import { useGetAllProducts } from "@/store/react-query/useGetAllProducts";
 import Categories from "./_components/Categories";
 import Hero from "./_components/Hero/Hero";

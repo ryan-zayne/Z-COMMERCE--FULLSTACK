@@ -2,11 +2,12 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router";
-import { LoadingSpinner } from "./components/primitives/LoadingSpinner";
+import { LoadingSpinner } from "./components/common/LoadingSpinner";
 import { composeLoaders, productLoader, sessionLoader } from "./store/react-query/loaders";
 import { getQueryClient } from "./store/react-query/queryClient";
 
 // Layouts
+const RootLayout = lazy(() => import("@/pages/layout"));
 const HomeLayout = lazy(() => import("@/pages/(home)/layout"));
 const AuthLayout = lazy(() => import("@/pages/auth/layout"));
 const VerifyEmailLayout = lazy(() => import("@/pages/auth/verify-email/layout"));
@@ -18,7 +19,7 @@ const ErrorPage = lazy(() => import("@/pages/error"));
 
 /* eslint-disable react-x/no-nested-lazy-component-declarations */
 const routes = createRoutesFromElements(
-	<Route errorElement={<ErrorPage />}>
+	<Route Component={RootLayout} errorElement={<ErrorPage />}>
 		<Route
 			loader={composeLoaders(sessionLoader, productLoader)}
 			Component={HomeLayout}

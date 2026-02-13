@@ -1,6 +1,6 @@
 import { assertDefined } from "@zayne-labs/toolkit-type-helpers";
+import { ProductCard } from "@/components/common/ProductCard";
 import { ForWithWrapper } from "@/components/primitives/for";
-import { ProductCard } from "@/components/ui/ProductCard";
 import type { DataArrayProp } from "./types";
 
 function SimilarProducts({ data }: DataArrayProp) {

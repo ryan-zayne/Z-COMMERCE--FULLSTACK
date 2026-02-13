@@ -8,8 +8,10 @@ export const createCommonStateSlice: StateCreator<GlobalStore, [], [], CommonSta
 	// eslint-disable-next-line perfectionist/sort-objects
 	actions: {
 		toggleNavShow: () => {
-			set((state) => ({ isNavShow: !state.isNavShow }));
-			lockScroll({ lock: get().isNavShow });
+			const { isNavShow } = get();
+
+			lockScroll({ lock: isNavShow });
+			set({ isNavShow: !isNavShow });
 		},
 	},
 });

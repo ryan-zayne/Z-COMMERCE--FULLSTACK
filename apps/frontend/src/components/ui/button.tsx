@@ -1,7 +1,7 @@
 import type { InferProps, PolymorphicProps } from "@zayne-labs/toolkit-react/utils";
 import { tv, type VariantProps } from "tailwind-variants";
 import { SpinnerIcon } from "../icons";
-import { Slot } from "./slot";
+import { Slot } from "../primitives/slot";
 
 export type ButtonProps = InferProps<"button">
 	& VariantProps<typeof buttonVariants> & {

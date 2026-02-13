@@ -5,15 +5,20 @@ import { createCommonStateSlice } from "./slices/commonStateSlice";
 import { createMediaQuerySlice } from "./slices/mediaQuerySlice";
 
 // State Object creation
-const globalStoreObjectFn: StateCreator<GlobalStore> = (...params) => ({
-	...createCommonStateSlice(...params),
-	...createMediaQuerySlice(...params),
+const globalStoreObjectFn: StateCreator<GlobalStore> = (...params) => {
+	const sliceOne = createCommonStateSlice(...params);
+	const sliceTwo = createMediaQuerySlice(...params);
 
-	actions: {
-		...createCommonStateSlice(...params).actions,
-		...createMediaQuerySlice(...params).actions,
-	},
-});
+	return {
+		...sliceOne,
+		...sliceTwo,
+
+		actions: {
+			...sliceOne.actions,
+			...sliceTwo.actions,
+		},
+	};
+};
 
 // Store hook creation
 export const useGlobalStore = createReactStore<GlobalStore>()(globalStoreObjectFn);

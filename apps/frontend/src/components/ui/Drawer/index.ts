@@ -1,3 +1,3 @@
-export * as Drawer from "./Drawer";
+export * as Drawer from "./drawer";
 
 export type * from "./types";

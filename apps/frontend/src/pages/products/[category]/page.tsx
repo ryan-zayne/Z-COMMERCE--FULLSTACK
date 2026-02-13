@@ -1,10 +1,10 @@
 import { assertDefined, type ExtractUnion } from "@zayne-labs/toolkit-type-helpers";
 import { getElementList } from "@zayne-labs/ui-react/common/for";
 import { Link, useParams } from "react-router";
-import { Button } from "@/components/primitives/button";
-import { IconBox } from "@/components/primitives/IconBox";
-import { LoadingSkeleton } from "@/components/ui/LoadingSkeleton";
-import { ProductCard } from "@/components/ui/ProductCard";
+import { IconBox } from "@/components/common/IconBox";
+import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
+import { ProductCard } from "@/components/common/ProductCard";
+import { Button } from "@/components/ui/button";
 import { useGetProductByCategory } from "@/store/react-query/useGetProductByCategory";
 
 // TODO - Remove once you start serving the products from your backend

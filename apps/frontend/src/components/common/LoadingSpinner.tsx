@@ -1,5 +1,5 @@
 import loadingSpinner from "@/assets/loadingSpinner.svg";
-import { Teleport } from "./teleport";
+import { Teleport } from "../primitives/teleport";
 
 const LOADER_LOOKUP = {
 	auth: () => (

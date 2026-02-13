@@ -1,6 +1,6 @@
 import { assertDefined } from "@zayne-labs/toolkit-type-helpers";
 import { ForWithWrapper } from "@zayne-labs/ui-react/common/for";
-import { ProductCard } from "@/components/ui/ProductCard";
+import { ProductCard } from "@/components/common/ProductCard";
 import type { DataArrayProp } from "./types";
 
 function HotSalesProducts({ data }: DataArrayProp) {

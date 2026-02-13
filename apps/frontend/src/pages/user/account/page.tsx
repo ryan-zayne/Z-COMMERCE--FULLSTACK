@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
-import { Button } from "@/components/primitives/button";
+import { Button } from "@/components/ui/button";
 import { sessionQuery } from "@/store/react-query/queryOptions";
 
 function UserAccountPage() {

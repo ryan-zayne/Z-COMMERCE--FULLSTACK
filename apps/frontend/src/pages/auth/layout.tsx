@@ -1,6 +1,6 @@
 import { preload } from "react-dom";
 import { Outlet, useLocation } from "react-router";
-import { Logo } from "@/components/primitives/Logo";
+import { Logo } from "@/components/common/Logo";
 import { cnJoin } from "@/lib/utils/cn";
 import { useGlobalStore } from "@/store/zustand/globalStore";
 

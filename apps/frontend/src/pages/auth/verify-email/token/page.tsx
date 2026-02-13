@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { useSearchParamsObject } from "@zayne-labs/toolkit-react";
 import { Link, useNavigate } from "react-router";
+import { IconBox } from "@/components/common/IconBox";
 import { BarScaleIcon } from "@/components/icons";
-import { Button } from "@/components/primitives/button";
-import { IconBox } from "@/components/primitives/IconBox";
+import { Button } from "@/components/ui/button";
 import { verifyEmailMutation } from "@/store/react-query/mutationOptions";
 
 function CheckVerificationTokenPage() {

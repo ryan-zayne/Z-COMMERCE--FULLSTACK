@@ -8,6 +8,7 @@ export default zayne(
 		},
 		react: true,
 		tailwindcssBetter: {
+			enforceCanonicalClasses: true,
 			settings: { entryPoint: "apps/frontend/tailwind.css" },
 		},
 		tanstack: {

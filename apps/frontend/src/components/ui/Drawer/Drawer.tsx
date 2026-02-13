@@ -4,11 +4,11 @@ import {
 	type PolymorphicProps,
 } from "@zayne-labs/toolkit-react/utils";
 import { Slot } from "@zayne-labs/ui-react/common/slot";
-import { Button } from "@/components/primitives/button";
-import { IconBox, type MoniconIconBoxProps } from "@/components/primitives/IconBox";
-import { Overlay as OverlayPrimitive } from "@/components/primitives/Overlay";
-import { Teleport } from "@/components/primitives/teleport";
+import { Button } from "@/components/ui/button";
 import { cnMerge } from "@/lib/utils/cn";
+import { IconBox, type MoniconIconBoxProps } from "../../common/IconBox";
+import { Overlay as OverlayPrimitive } from "../../common/Overlay";
+import { Teleport } from "../../primitives/teleport";
 import { DrawerContextProvider, useDrawer, useDrawerContext } from "./drawer-context";
 import type { DrawerCloseProps, DrawerContentProps, DrawerRootProviderProps } from "./types";
 

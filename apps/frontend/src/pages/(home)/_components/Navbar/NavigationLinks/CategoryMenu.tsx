@@ -1,10 +1,9 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router";
-import { IconBox } from "@/components/primitives/IconBox";
-import { DropDown } from "@/components/ui/DropDown";
+import { IconBox } from "@/components/common/IconBox";
+import { DropDown, useDropdown } from "@/components/ui/dropdown";
 import { cnJoin } from "@/lib/utils/cn";
 import { useGlobalStore } from "@/store/zustand/globalStore";
-import { useDropdown } from "../../DropDown/dropdown-context";
 
 const categories = [
 	{ path: "products", title: "All Products" },

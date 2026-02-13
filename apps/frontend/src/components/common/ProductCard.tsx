@@ -7,10 +7,10 @@ import type { ProductItemSchemaType } from "@/store/react-query/types";
 import { useGlobalStore } from "@/store/zustand/globalStore";
 import { useShopStore } from "@/store/zustand/shopStore";
 import type { ResponseDataItemInCart } from "@/store/zustand/types";
-import { Button } from "../primitives/button";
-import { IconBox } from "../primitives/IconBox";
-import { ImageComponent } from "../primitives/ImageComponent";
-import { StarRating } from "../primitives/StarRating";
+import { Button } from "../ui/button";
+import { IconBox } from "./IconBox";
+import { ImageComponent } from "./ImageComponent";
+import { StarRating } from "./StarRating";
 
 type ProductCardProps = {
 	image: string;
@@ -118,7 +118,7 @@ function ProductCard(props: ProductCardProps) {
 						</span>
 					</header>
 
-					<p className="mt-[5px] min-h-[60px] max-w-[30ch] text-[12px]">{productItem.description}</p>
+					<p className="mt-[6px] min-h-[60px] max-w-[30ch] text-[12px]">{productItem.description}</p>
 				</Card.Content>
 
 				<Card.Footer className="p-[13px_10px_10px]">
@@ -134,7 +134,7 @@ function ProductCard(props: ProductCardProps) {
 					<Button
 						variant="cart"
 						theme="secondary"
-						className="mt-[10px] p-[8px_13px] text-[13px] font-medium active:translate-y-[1.5px]"
+						className="mt-2.5 p-[8px_13px] text-[13px] font-medium active:translate-y-[1.5px]"
 						onClick={handleAddToCart}
 					>
 						Add to Cart

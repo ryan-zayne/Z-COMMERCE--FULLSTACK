@@ -4,9 +4,9 @@ import { Link } from "react-router";
 import { cnMerge } from "@/lib/utils/cn";
 import { useGetAllProducts } from "@/store/react-query/useGetAllProducts";
 import { useGlobalStore } from "@/store/zustand/globalStore";
-import { Button, type ButtonProps } from "../primitives/button";
-import { getElementList } from "../primitives/for";
-import { IconBox, type MoniconIconBoxProps } from "../primitives/IconBox";
+import { ForWithWrapper } from "../primitives/for";
+import { Button, type ButtonProps } from "../ui/button";
+import { IconBox, type MoniconIconBoxProps } from "./IconBox";
 
 type SearchFormProps = Pick<ButtonProps, "size" | "theme" | "variant"> & {
 	buttonIcon?: MoniconIconBoxProps["icon"];
@@ -30,10 +30,10 @@ function SearchForm(props: SearchFormProps) {
 		buttonIcon = "bx:search-alt-2",
 		classNames,
 		isSearchShow,
-		type = "search",
-		placeholder = type === "search" ? "Search for products..." : "Enter Your Email address...",
+		placeholder,
 		text,
 		theme = "secondary",
+		type = "search",
 		variant = "input",
 	} = props;
 
@@ -48,8 +48,6 @@ function SearchForm(props: SearchFormProps) {
 			setQuery("");
 		}
 	}, [isSearchShow, setQuery]);
-
-	const [SearchItemsList] = getElementList();
 
 	const handleQuery = (e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value);
 
@@ -69,7 +67,10 @@ function SearchForm(props: SearchFormProps) {
 					)}
 					type={type === "search" ? "search" : "email"}
 					name={type}
-					placeholder={placeholder}
+					placeholder={
+						placeholder
+						?? (type === "search" ? "Search for products..." : "Enter Your Email address...")
+					}
 					value={type === "search" ? query : undefined}
 					onChange={type === "search" ? handleQuery : undefined}
 				/>
@@ -88,7 +89,7 @@ function SearchForm(props: SearchFormProps) {
 			</form>
 
 			{type === "search" && data.length > 0 && query !== "" && (
-				<SearchItemsList
+				<ForWithWrapper
 					className={cnMerge(
 						`absolute top-[81px] z-100 flex max-h-[500px] custom-scrollbar w-[min(100%,400px)]
 						flex-col gap-[10px] overflow-y-auto rounded-[10px] bg-body px-[20px] text-[12px]`,

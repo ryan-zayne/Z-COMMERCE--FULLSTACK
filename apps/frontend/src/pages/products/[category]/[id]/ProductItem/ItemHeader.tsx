@@ -1,7 +1,7 @@
 import { useToggle } from "@zayne-labs/toolkit-react";
 import { Link } from "react-router";
-import { Button } from "@/components/primitives/button";
-import { IconBox } from "@/components/primitives/IconBox";
+import { IconBox } from "@/components/common/IconBox";
+import { Button } from "@/components/ui/button";
 import type { ProductItemSchemaType } from "@/store/react-query/types";
 import { useShopStore } from "@/store/zustand/shopStore";
 import type { ShopStore } from "@/store/zustand/types";

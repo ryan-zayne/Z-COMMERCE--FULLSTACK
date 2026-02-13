@@ -1,5 +1,5 @@
-import { Button } from "@/components/primitives/button";
-import { IconBox } from "@/components/primitives/IconBox";
+import { IconBox } from "@/components/common/IconBox";
+import { Button } from "@/components/ui/button";
 import { useShopStore } from "@/store/zustand/shopStore";
 import type { ShopStore } from "@/store/zustand/types";
 
