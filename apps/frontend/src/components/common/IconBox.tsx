@@ -1,7 +1,7 @@
-import { getMoniconProps, type MoniconIconNameType } from "@@/config/monicon/utils";
 import { Icon as IconifyIcon, type IconifyIcon as IconifyIconType, type IconProps } from "@iconify/react";
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";
 import { useMemo } from "react";
+import { getMoniconProps, type MoniconIconNameType } from "../../../monicon.config";
 
 export type MoniconIconBoxProps = InferProps<"svg"> & {
 	icon: MoniconIconNameType;

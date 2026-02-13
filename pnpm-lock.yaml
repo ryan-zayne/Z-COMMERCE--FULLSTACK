@@ -183,9 +183,6 @@ importers:
       '@hookform/resolvers':
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.71.1(react@19.2.4))
-      '@monicon/core':
-        specifier: ^2.0.7
-        version: 2.0.7(typescript@5.9.3)
       '@tanstack/react-query':
         specifier: ^5.90.21
         version: 5.90.21(react@19.2.4)
@@ -244,12 +241,12 @@ importers:
       '@hookform/devtools':
         specifier: ^4.4.0
         version: 4.4.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@iconify/json':
-        specifier: ^2.2.418
-        version: 2.2.439
       '@iconify/react':
         specifier: ^6.0.2
         version: 6.0.2(react@19.2.4)
+      '@monicon/core':
+        specifier: 2.0.7
+        version: 2.0.7(typescript@5.9.3)
       '@monicon/vite':
         specifier: 2.0.7
         version: 2.0.7(typescript@5.9.3)(vite@8.0.0-beta.14(@types/node@25.2.3)(esbuild@0.27.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.2))
@@ -901,9 +898,6 @@ packages:
         optional: true
       prettier-plugin-ember-template-tag:
         optional: true
-
-  '@iconify/json@2.2.439':
-    resolution: {integrity: sha512-DFpo7ZqntngeDaVFtsj+AydUrJoEPW0FIpMrmngo3iHxLXpqcNe5lhztPqvVBoXllbohomcA1YRjRO/ljo7AnQ==}
 
   '@iconify/react@6.0.2':
     resolution: {integrity: sha512-SMmC2sactfpJD427WJEDN6PMyznTFMhByK9yLW0gOTtnjzzbsi/Ke/XqsumsavFPwNiXs8jSiYeZTmLCLwO+Fg==}
@@ -5120,11 +5114,6 @@ snapshots:
       semver: 7.7.4
     transitivePeerDependencies:
       - supports-color
-
-  '@iconify/json@2.2.439':
-    dependencies:
-      '@iconify/types': 2.0.0
-      pathe: 2.0.3
 
   '@iconify/react@6.0.2(react@19.2.4)':
     dependencies:

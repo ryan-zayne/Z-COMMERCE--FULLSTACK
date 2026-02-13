@@ -13,7 +13,6 @@
 	"dependencies": {
 		"@ark-ui/react": "^5.31.0",
 		"@hookform/resolvers": "^5.2.2",
-		"@monicon/core": "^2.0.7",
 		"@tanstack/react-query": "^5.90.21",
 		"@z-commerce/shared": "workspace:*",
 		"@zayne-labs/callapi": "1.11.46",
@@ -35,8 +34,8 @@
 	},
 	"devDependencies": {
 		"@hookform/devtools": "^4.4.0",
-		"@iconify/json": "^2.2.418",
 		"@iconify/react": "^6.0.2",
+		"@monicon/core": "2.0.7",
 		"@monicon/vite": "2.0.7",
 		"@tailwindcss/postcss": "^4.1.18",
 		"@tailwindcss/vite": "^4.1.18",

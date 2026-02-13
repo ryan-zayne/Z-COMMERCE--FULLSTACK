@@ -1,4 +1,6 @@
-import { moniconLocalIcons, type MoniconIconNameType } from "@@/.monicon/icons";
+import { moniconLocalIcons } from "../.monicon/icons";
+
+export type MoniconIconNameType = keyof typeof moniconLocalIcons;
 
 export const getMoniconProps = (icon: MoniconIconNameType) => {
 	const details = moniconLocalIcons[icon];
@@ -10,5 +12,3 @@ export const getMoniconProps = (icon: MoniconIconNameType) => {
 		width: "1em",
 	};
 };
-
-export type { MoniconIconNameType } from "@@/.monicon/icons";
