@@ -1,6 +1,7 @@
 import type { InferProps, PolymorphicProps } from "@zayne-labs/toolkit-react/utils";
 import { tv, type VariantProps } from "tailwind-variants";
-import { SpinnerIcon } from "../icons";
+import { cnJoin } from "@/lib/utils/cn";
+import { IconBox } from "../common/IconBox";
 import { Slot } from "../primitives/slot";
 
 export type ButtonProps = InferProps<"button">
@@ -50,48 +51,60 @@ export const buttonVariants = tv({
 	},
 });
 
-function Button<TElement extends React.ElementType<ButtonProps> = "button">(
-	props: PolymorphicProps<TElement, ButtonProps>
-) {
+function Button<TElement extends React.ElementType>(props: PolymorphicProps<TElement, ButtonProps>) {
 	const {
 		as: Element = "button",
 		asChild,
 		children,
 		className,
-		disabled,
-		isDisabled = disabled,
-		isLoading,
-		size = "md",
+		isDisabled = false,
+		disabled = isDisabled,
+		isLoading = false,
+		loadingStyle = "replace-content",
+		size,
 		theme,
 		type = "button",
 		unstyled,
-		variant = "regular",
-		...extraButtonProps
+		...restOfProps
 	} = props;
 
 	const Component = asChild ? Slot.Root : Element;
 
 	const BTN_CLASSES =
-		!unstyled ? buttonVariants({ className, isDisabled, isLoading, size, theme, variant }) : className;
+		!unstyled ?
+			buttonVariants({
+				className,
+				isDisabled,
+				isLoading,
+				size,
+				theme,
+			})
+		:	className;
 
 	const withIcon = (
 		<>
 			<Slot.Slottable>
-				<div className="invisible [grid-area:1/1]">{children}</div>
+				{loadingStyle === "replace-content" ?
+					<div className="invisible [grid-area:1/1]">{children}</div>
+				:	children}
 			</Slot.Slottable>
 
-			<span className="flex justify-center [grid-area:1/1]">
-				<SpinnerIcon className="text-white" />
+			<span
+				className={cnJoin(
+					"flex justify-center",
+					loadingStyle === "replace-content" && "[grid-area:1/1]"
+				)}
+			>
+				<IconBox icon="svg-spinners:ring-resize" className="size-6 text-white" />
 			</span>
 		</>
 	);
 
 	// == This technique helps prevents content shift when replacing children with spinner icon
 	return (
-		<Component type={type} className={BTN_CLASSES} disabled={disabled} {...extraButtonProps}>
+		<Component type={type} className={BTN_CLASSES} disabled={disabled || isDisabled} {...restOfProps}>
 			{isLoading ? withIcon : children}
 		</Component>
 	);
 }
-
 export { Button };

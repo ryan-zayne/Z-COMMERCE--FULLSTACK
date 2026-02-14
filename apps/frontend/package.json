@@ -5,6 +5,7 @@
 	"private": true,
 	"scripts": {
 		"build": "vite build",
+		"build:analyze": "vite build && npx vite-bundle-analyzer dist/stats.html",
 		"dev": "vite",
 		"lint:eslint": "eslint . --max-warnings 0",
 		"lint:type-check": "tsc --pretty  -p tsconfig.json",

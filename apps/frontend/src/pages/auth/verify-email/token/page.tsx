@@ -2,7 +2,6 @@ import { useMutation } from "@tanstack/react-query";
 import { useSearchParamsObject } from "@zayne-labs/toolkit-react";
 import { Link, useNavigate } from "react-router";
 import { IconBox } from "@/components/common/IconBox";
-import { BarScaleIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { verifyEmailMutation } from "@/store/react-query/mutationOptions";
 
@@ -55,7 +54,7 @@ function CheckVerificationTokenPage() {
 				className="invisible flex flex-col items-center gap-6 [grid-area:1/1]
 					group-data-[loading=true]:visible"
 			>
-				<BarScaleIcon className="size-10" />
+				<IconBox icon="svg-spinners:bars-scale" type="local" className="size-10" />
 
 				<p>Verifying your email, please wait...</p>
 			</section>

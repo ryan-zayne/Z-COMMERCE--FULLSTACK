@@ -1,5 +1,6 @@
 import { Icon as IconifyIcon, type IconifyIcon as IconifyIconType, type IconProps } from "@iconify/react";
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";
+import type { AnyString } from "@zayne-labs/toolkit-type-helpers";
 import { useMemo } from "react";
 import { getMoniconProps, type MoniconIconNameType } from "../../../monicon-config";
 
@@ -9,7 +10,7 @@ export type MoniconIconBoxProps = InferProps<"svg"> & {
 };
 
 type IconifyIconBoxProps = Omit<IconProps, "icon"> & {
-	icon: string | IconifyIconType;
+	icon: AnyString | IconifyIconType;
 	type: "online";
 };
 
