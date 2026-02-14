@@ -9,14 +9,14 @@
 		"default": [
 			{
 				"autoExecuteCommands": true,
-				"cwd": "frontend",
+				"cwd": "apps/frontend",
 				"icon": "browser",
 				"name": "dev:frontend",
 				"commands": ["pnpm dev"]
 			},
 			{
 				"autoExecuteCommands": true,
-				"cwd": "backend",
+				"cwd": "apps/backend",
 				"icon": "server",
 				"name": "dev:backend",
 				"commands": ["pnpm dev"]
