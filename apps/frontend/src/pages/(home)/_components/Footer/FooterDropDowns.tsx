@@ -1,5 +1,5 @@
 import { m } from "motion/react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { IconBox } from "@/components/common/IconBox";
 import { Logo } from "@/components/common/Logo";
 import { Show } from "@/components/primitives/show";
@@ -17,7 +17,10 @@ function FooterDropDowns() {
 	const dropFour = useDropdown();
 	const dropFive = useDropdown();
 
-	const dropdownsArray = [dropOne, dropTwo, dropThree, dropFour, dropFive];
+	const dropdownsArray = useMemo(
+		() => [dropOne, dropTwo, dropThree, dropFour, dropFive],
+		[dropFive, dropFour, dropOne, dropThree, dropTwo]
+	);
 
 	useEffect(() => {
 		if (!isDesktop) return;
@@ -25,8 +28,7 @@ function FooterDropDowns() {
 		for (const dropdown of dropdownsArray) {
 			dropdown.onOpen();
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isDesktop]);
+	}, [dropdownsArray, isDesktop]);
 
 	useEffect(() => {
 		if (isDesktop) return;
@@ -34,8 +36,7 @@ function FooterDropDowns() {
 		for (const dropdown of dropdownsArray) {
 			dropdown.onClose();
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isDesktop]);
+	}, [dropdownsArray, isDesktop]);
 
 	const handleDropDowns = (selectedDropdown: ReturnType<typeof useDropdown>) => {
 		const onClick = (event: React.MouseEvent) => {

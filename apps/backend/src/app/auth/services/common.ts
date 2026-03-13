@@ -1,5 +1,7 @@
-import argon2 from "@node-rs/argon2";
+/* eslint-disable import/no-named-as-default-member */
+import * as argon2 from "@node-rs/argon2";
 import { consola } from "consola";
+// eslint-disable-next-line import/default
 import jwt from "jsonwebtoken";
 import type { CallbackWithoutResultAndOptionalError, HydratedDocument } from "mongoose";
 import type { HydratedUserType, UserType } from "@/app/auth/types";

@@ -20,10 +20,13 @@ export default zayne(
 	},
 	{
 		files: ["apps/backend/**/*.ts"],
-		rules: { "node/no-process-env": "error" },
+		rules: {
+			"node/no-process-env": "error",
+		},
 	}
 ).overrides({
-	"zayne/node/security/recommended": {
+	"zayne/node/security/recommended": (config) => ({
+		...config,
 		files: ["apps/backend/src/**/*.ts"],
-	},
+	}),
 });

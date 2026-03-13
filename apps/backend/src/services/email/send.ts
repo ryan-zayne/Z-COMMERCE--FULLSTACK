@@ -1,5 +1,5 @@
 import { consola } from "consola";
-import nodemailer from "nodemailer";
+import * as nodemailer from "nodemailer";
 import { ENVIRONMENT } from "@/config/env";
 import { TEMPLATES_LOOKUP } from "./templates/lookup";
 import type { VerifyEmailData } from "./templates/types";

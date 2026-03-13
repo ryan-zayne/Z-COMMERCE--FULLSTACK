@@ -1,4 +1,4 @@
-import express from "express";
+import * as express from "express";
 import { IpFilter } from "express-ipfilter";
 import { initialize, verifyWithApi, verifyWithHook } from "./handlers";
 

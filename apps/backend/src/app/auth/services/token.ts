@@ -1,5 +1,7 @@
+/* eslint-disable import/no-named-as-default-member */
 import { pickKeys } from "@zayne-labs/toolkit-core";
 import { consola } from "consola";
+// eslint-disable-next-line import/default
 import jwt from "jsonwebtoken";
 import type { HydratedDocument } from "mongoose";
 import { ENVIRONMENT } from "@/config/env";

@@ -20,7 +20,9 @@ const app = express();
  *  == Express configuration
  */
 // app.set("trust proxy", ["loopback", "linklocal", "uniquelocal"]); // Enable trust proxy
+// eslint-disable-next-line import/no-named-as-default-member
 app.use(express.json({ limit: "10kb" }));
+// eslint-disable-next-line import/no-named-as-default-member
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(ENVIRONMENT.COOKIE_SECRET));
 

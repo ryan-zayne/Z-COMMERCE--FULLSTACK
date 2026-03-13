@@ -40,9 +40,9 @@ export const createMediaQuerySlice: StateCreator<GlobalStore, [], [], MediaQuery
 				return;
 			}
 
-			on("change", mobile.queryList, setQuery("mobile"), { signal: controller.signal });
-			on("change", tablet.queryList, setQuery("tablet"), { signal: controller.signal });
-			on("change", desktop.queryList, setQuery("desktop"), { signal: controller.signal });
+			on(mobile.queryList, "change", setQuery("mobile"), { signal: controller.signal });
+			on(tablet.queryList, "change", setQuery("tablet"), { signal: controller.signal });
+			on(desktop.queryList, "change", setQuery("desktop"), { signal: controller.signal });
 		},
 
 		setQuery: (query) => () => {

@@ -6,12 +6,12 @@
 		"./*": "./src/*.ts"
 	},
 	"dependencies": {
-		"@zayne-labs/callapi": "1.11.46",
-		"@zayne-labs/toolkit-type-helpers": "^0.12.41",
+		"@zayne-labs/callapi": "1.12.0",
+		"@zayne-labs/toolkit-type-helpers": "^0.12.44",
 		"zod": "^4.3.6"
 	},
 	"devDependencies": {
-		"@zayne-labs/tsconfig": "^0.11.27",
+		"@zayne-labs/tsconfig": "^0.11.31",
 		"typescript": "^5.9.3"
 	}
 }

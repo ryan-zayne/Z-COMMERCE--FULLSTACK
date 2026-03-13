@@ -1,5 +1,5 @@
 import { isObject } from "@zayne-labs/toolkit-type-helpers";
-import jwt from "jsonwebtoken";
+import * as jwt from "jsonwebtoken";
 import { Error as MongooseError } from "mongoose";
 import { errorCodes } from "../../constants";
 import { AppError } from "../../utils";

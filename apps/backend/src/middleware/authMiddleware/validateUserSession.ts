@@ -1,4 +1,6 @@
+/* eslint-disable import/no-named-as-default-member */
 import { defineEnum, type UnionDiscriminator } from "@zayne-labs/toolkit-type-helpers";
+// eslint-disable-next-line import/default
 import jwt from "jsonwebtoken";
 import type { HydratedDocument } from "mongoose";
 import { UserModel } from "@/app/auth/model";

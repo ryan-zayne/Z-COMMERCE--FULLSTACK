@@ -1,4 +1,4 @@
-import express from "express";
+import * as express from "express";
 import { authMiddleware } from "@/middleware";
 import { resendVerificationEmail, session, signIn, signOut, signUp, verifyEmail } from "./handlers";
 
