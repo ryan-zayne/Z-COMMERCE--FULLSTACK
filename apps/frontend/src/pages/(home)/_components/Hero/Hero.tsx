@@ -27,8 +27,8 @@ function Hero() {
 				images={slideImages}
 				onSlideBtnClick={handleElementsAnimation}
 				classNames={{
-					base: "mx-[10px] h-[330px] md:h-[414px] lg:h-[485px]",
-					scrollContainer: "rounded-[7px] dark:shadow-[0_0_7px_-1px_hsl(0,0%,40%,0.6)]",
+					base: "mx-2.5 h-[330px] md:h-[414px] lg:h-[485px]",
+					content: "rounded-[7px] dark:shadow-[0_0_7px_-1px_hsl(0,0%,40%,0.6)]",
 				}}
 				autoSlideInterval={8000}
 				hasAutoSlide={true}
@@ -36,7 +36,7 @@ function Hero() {
 			>
 				<Carousel.Controls
 					classNames={{
-						base: "px-[7px] md:px-[8px] lg:pr-[20px] lg:pl-[300px]",
+						base: "px-2 lg:pr-5 lg:pl-[300px]",
 						iconContainer: `rounded-[5px] bg-carousel-btn p-[8px_5px]
 						hover:shadow-[0_0_5px_var(--text-dark)] lg:p-[13px_9px]`,
 					}}
@@ -47,8 +47,8 @@ function Hero() {
 				/>
 
 				<Carousel.ItemList<typeof slideImages>>
-					{({ image }) => (
-						<Carousel.Item key={image.src} className="brightness-[0.6]">
+					{({ image, index }) => (
+						<Carousel.Item currentIndex={index} key={image.src} className="brightness-[0.6]">
 							<ImageComponent
 								className="size-full"
 								imageType="hasFallback"
@@ -61,8 +61,9 @@ function Hero() {
 				</Carousel.ItemList>
 
 				<Carousel.Caption
-					className="mt-[37px] ml-[45px] flex flex-col items-start text-light md:ml-[75px]
-						lg:mt-[80px] lg:ml-[360px]"
+					placement="top-left"
+					className="mt-9 ml-11 flex flex-col items-start text-light md:ml-[75px] lg:mt-[80px]
+						lg:ml-[360px]"
 				>
 					<h1
 						ref={setAnimatedNode("heading")}

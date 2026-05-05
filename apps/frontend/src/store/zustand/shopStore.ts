@@ -1,3 +1,4 @@
+import { pipeline } from "@zayne-labs/toolkit-core";
 import { createReactStore } from "@zayne-labs/toolkit-react/zustand-compat";
 import { toast } from "sonner";
 import type { StateCreator } from "zustand";
@@ -109,11 +110,13 @@ const shopStateObjectFn: StateCreator<ShopStore> = (set, get) => ({
 });
 
 export const useShopStore = createReactStore(
-	persist(shopStateObjectFn, {
-		name: "shop",
-		partialize: ({ actions: _ignoredActions, ...actualState }) => actualState,
-		version: 1,
-	})
+	pipeline(shopStateObjectFn, (storeObject) =>
+		persist(storeObject, {
+			name: "shop",
+			partialize: ({ actions: _ignoredActions, ...actualState }) => actualState,
+			version: 1,
+		})
+	)
 );
 
 useShopStore.subscribe.withSelector(

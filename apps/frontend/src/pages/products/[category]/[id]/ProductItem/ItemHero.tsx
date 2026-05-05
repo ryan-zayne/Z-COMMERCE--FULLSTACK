@@ -13,7 +13,7 @@ function ItemHero({ slideImages }: ItemHeroProps) {
 			as="div"
 			classNames={{
 				base: "h-[350px] w-[min(100%,500px)] max-md:mx-auto md:h-full",
-				scrollContainer: "rounded-[7px] dark:shadow-[0_0_7px_-1px_hsl(0,0%,40%,0.6)]",
+				content: "rounded-[7px] dark:shadow-[0_0_7px_-1px_hsl(0,0%,40%,0.6)]",
 			}}
 		>
 			<Carousel.Controls
@@ -29,8 +29,8 @@ function ItemHero({ slideImages }: ItemHeroProps) {
 			/>
 
 			<Carousel.ItemList<typeof slideImages> className={"brightness-[0.65]"}>
-				{({ image }) => (
-					<Carousel.Item key={image}>
+				{({ image, index }) => (
+					<Carousel.Item currentIndex={index} key={image}>
 						<ImageComponent imageType={"hasSkeleton"} src={image} />
 					</Carousel.Item>
 				)}

@@ -2,12 +2,11 @@
 	"extends": "@zayne-labs/tsconfig/bundler/dom",
 
 	"compilerOptions": {
-		"baseUrl": ".",
 		"paths": {
-			"@/*": ["src/*"]
+			"@/*": ["./src/*"]
 		}
 	},
 
-	"include": ["src/**/*", "**/*"],
+	"include": ["src/**/*.ts", "src/**/*.tsx"],
 	"exclude": ["node_modules/**"]
 }

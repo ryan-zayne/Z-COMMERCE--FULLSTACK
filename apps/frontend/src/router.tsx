@@ -17,7 +17,6 @@ const ProtectionLayout = lazy(() => import("@/pages/layout.protect"));
 const NotFoundPage = lazy(() => import("@/pages/not-found"));
 const ErrorPage = lazy(() => import("@/pages/error"));
 
-/* eslint-disable react-x/no-nested-lazy-component-declarations */
 const routes = createRoutesFromElements(
 	<Route Component={RootLayout} errorElement={<ErrorPage />}>
 		<Route
@@ -73,7 +72,6 @@ const routes = createRoutesFromElements(
 		<Route path="*" element={<NotFoundPage />} />
 	</Route>
 );
-/* eslint-enable react-x/no-nested-lazy-component-declarations */
 
 const browserRouter = createBrowserRouter(routes);
 

@@ -2,13 +2,12 @@ import { zayne } from "@zayne-labs/eslint-config";
 
 export default zayne(
 	{
-		ignores: ["apps/frontend/dist", "apps/frontend/.monicon"],
+		ignores: ["apps/frontend/dist", "apps/frontend/.monicon", "eslint.config.js"],
 		node: {
 			security: true,
 		},
 		react: true,
 		tailwindcssBetter: {
-			enforceCanonicalClasses: true,
 			settings: { entryPoint: "apps/frontend/tailwind.css" },
 		},
 		tanstack: {

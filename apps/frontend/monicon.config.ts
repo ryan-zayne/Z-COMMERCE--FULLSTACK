@@ -1,7 +1,13 @@
-import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
+import type { MoniconConfig } from "@monicon/core";
+import { iconsGenPlugin } from "./monicon-config/iconsGenPlugin.ts";
 
-const iconsArray = defineEnum(
-	[
+export default {
+	icons: getIconsArray(),
+	plugins: [iconsGenPlugin({ outputPath: ".monicon" })],
+} satisfies MoniconConfig;
+
+function getIconsArray() {
+	return [
 		"basil:caret-down-outline",
 		"bi:chevron-double-right",
 		"bi:chevron-right",
@@ -44,8 +50,5 @@ const iconsArray = defineEnum(
 		"typcn:arrow-back",
 		"svg-spinners:bars-scale",
 		"svg-spinners:ring-resize",
-	],
-	{ inferredUnionVariant: "values" }
-);
-
-export { iconsArray };
+	];
+}

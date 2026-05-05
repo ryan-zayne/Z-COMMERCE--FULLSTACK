@@ -2,11 +2,10 @@
 	"extends": "@zayne-labs/tsconfig/bundler/no-dom/app",
 
 	"compilerOptions": {
-		"baseUrl": ".",
 		"paths": {
-			"@/*": ["src/*"]
+			"@/*": ["./src/*"]
 		}
 	},
 
-	"include": ["src/**/*", "**/*"]
+	"include": ["**/*.ts", "**/*.tsx"]
 }
