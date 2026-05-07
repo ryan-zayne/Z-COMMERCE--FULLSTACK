@@ -301,7 +301,7 @@ function CheckoutPage() {
 											</p>
 										</div>
 										<p className="shrink-0 text-[15px] font-medium">
-											${item.price.toLocaleString()}
+											{item.price.toLocaleString()}
 										</p>
 									</div>
 								</li>

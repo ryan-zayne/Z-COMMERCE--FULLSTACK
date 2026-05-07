@@ -14,47 +14,49 @@ const categories = [
 	{ path: "products/lighting", title: "Digital Lighting" },
 ];
 
-function CategoryMenu({ deviceType }: { deviceType: "desktop" | "mobile" }) {
-	const href = useLocation().pathname;
-	const isDesktopDevice = deviceType === "desktop";
+function CategoryMenu(props: { deviceType: "desktop" | "mobile" }) {
+	const { deviceType } = props;
+
+	const pathname = useLocation().pathname;
+
 	const isNavShow = useGlobalStore((state) => state.isNavShow);
 	const { toggleNavShow } = useGlobalStore((state) => state.actions);
 
-	const dropdown = useDropdown({ initialState: isDesktopDevice && href === "/" });
+	const dropdown = useDropdown({ initialState: deviceType === "desktop" && pathname === "/" });
 
 	useEffect(() => {
-		if (!isDesktopDevice) return;
+		if (deviceType !== "desktop") return;
 
-		const selectedAction = href === "/" ? dropdown.onOpen : dropdown.onClose;
+		const selectedAction = pathname === "/" ? dropdown.onOpen : dropdown.onClose;
 
 		selectedAction();
-	}, [dropdown.onClose, dropdown.onOpen, href, isDesktopDevice]);
+	}, [dropdown.onClose, dropdown.onOpen, pathname, deviceType]);
 
 	useEffect(() => {
-		if (isDesktopDevice) return;
+		if (deviceType === "desktop") return;
 
 		const onClose = dropdown.onClose;
 
 		!isNavShow && onClose();
-	}, [isDesktopDevice, isNavShow, dropdown.onClose]);
+	}, [deviceType, isNavShow, dropdown.onClose]);
 
 	const CategoryList = categories.map((category) => (
 		<li
 			key={category.title}
 			className={"max-lg:hover:text-heading"}
-			onClick={!isDesktopDevice ? toggleNavShow : undefined} // To close NavBar on link visit while on mobile
+			onClick={deviceType !== "desktop" ? toggleNavShow : undefined} // To close NavBar on link visit while on mobile
 		>
 			<Link
 				to={category.path}
 				className={cnJoin(
-					isDesktopDevice
+					deviceType !== "desktop"
 						&& `flex items-center justify-between py-[10px]
 						[border-bottom:1px_solid_var(--color-primary)]`
 				)}
 			>
 				<p>{category.title}</p>
 
-				{isDesktopDevice && <IconBox icon="bi:chevron-double-right" />}
+				{deviceType === "desktop" && <IconBox icon="bi:chevron-double-right" />}
 			</Link>
 		</li>
 	));

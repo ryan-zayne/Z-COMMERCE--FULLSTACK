@@ -19,7 +19,6 @@ type SearchFormProps = Pick<ButtonProps, "size" | "theme" | "variant"> & {
 		input?: string;
 	};
 
-	isSearchShow?: boolean;
 	placeholder?: string;
 	text?: string;
 	type?: "search" | "subscribe";
@@ -29,7 +28,6 @@ function SearchForm(props: SearchFormProps) {
 	const {
 		buttonIcon = "bx:search-alt-2",
 		classNames,
-		isSearchShow,
 		placeholder,
 		text,
 		theme = "secondary",
@@ -42,12 +40,6 @@ function SearchForm(props: SearchFormProps) {
 	const isMobile = useGlobalStore((state) => state.isMobile);
 
 	const { data, query, setQuery } = useSearch(allProductsArray, 500);
-
-	useEffect(() => {
-		if (!isSearchShow) {
-			setQuery("");
-		}
-	}, [isSearchShow, setQuery]);
 
 	const handleQuery = (e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value);
 

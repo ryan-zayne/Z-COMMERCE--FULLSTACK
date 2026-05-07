@@ -21,7 +21,7 @@ const resendVerificationEmail = catchAsync<{
 		throw new AppError({ code: 400, message: "Email already verified" });
 	}
 
-	await sendVerificationEmail(user as HydratedUserType);
+	await sendVerificationEmail(user);
 
 	return AppResponse(res, { data: null, message: `Verification link sent to ${email}` });
 });

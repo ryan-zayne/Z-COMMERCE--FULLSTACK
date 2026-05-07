@@ -31,9 +31,7 @@ function NavIconsHeader() {
 		if (!isMobile && isSearchShow) {
 			toggleSearchShow(false);
 		}
-		// eslint-disable-next-line react-hooks/rule-suppression
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isMobile, isSearchShow]);
+	}, [isMobile, isSearchShow, toggleSearchShow]);
 
 	const queryClient = useQueryClient();
 
@@ -57,7 +55,7 @@ function NavIconsHeader() {
 			<Logo className={cnJoin(isDarkMode && "brightness-[0.8] contrast-[1.8]")} />
 
 			<SearchForm
-				isSearchShow={isSearchShow}
+				key={String(isSearchShow)}
 				classNames={{
 					base: cnMerge(
 						isMobile

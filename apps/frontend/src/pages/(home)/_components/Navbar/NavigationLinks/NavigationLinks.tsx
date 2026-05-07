@@ -1,5 +1,5 @@
 import type { UnionDiscriminator } from "@zayne-labs/toolkit-type-helpers";
-import { getElementList } from "@zayne-labs/ui-react/common/for";
+import { For } from "@zayne-labs/ui-react/common/for";
 import { Show } from "@zayne-labs/ui-react/common/show";
 import { NavLink } from "react-router";
 import { IconBox } from "@/components/common/IconBox";
@@ -32,8 +32,6 @@ function NavigationLinks() {
 	const isDesktop = useGlobalStore((state) => state.isDesktop);
 	const isNavShow = useGlobalStore((state) => state.isNavShow);
 	const { toggleNavShow } = useGlobalStore((state) => state.actions);
-
-	const [NavLinksList] = getElementList("base");
 
 	const navLinkInfoArray: NavItemsType = [
 		{
@@ -87,7 +85,7 @@ function NavigationLinks() {
 					</Button>
 				)}
 
-				<NavLinksList
+				<For
 					each={navLinkInfoArray}
 					renderItem={(navLinkInfo) => {
 						const { childElement, className, id, path, shouldShow, title } = navLinkInfo;

@@ -19,6 +19,7 @@ const authMiddleware = catchAsync<{ user: HydratedDocument<UserType> }>(async (r
 		});
 	}
 
+	// eslint-disable-next-line require-atomic-updates
 	req.user = currentUser;
 
 	next();

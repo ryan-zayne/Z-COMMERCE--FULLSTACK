@@ -43,7 +43,7 @@ export function Monicon(props: Omit<MoniconIconBoxProps, "type">) {
 		<svg
 			{...restOfMoniconProps}
 			{...restOfProps}
-			// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
+			// eslint-disable-next-line react/dom-no-dangerously-set-innerhtml
 			dangerouslySetInnerHTML={{ __html: svgInnerHTML }}
 		/>
 	);

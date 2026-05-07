@@ -34,7 +34,7 @@ const signUp = catchAsync<{
 		expires: new Date(Date.now() + ENVIRONMENT.REFRESH_JWT_EXPIRES_IN),
 	});
 
-	void sendVerificationEmail(newUser as HydratedUserType);
+	void sendVerificationEmail(newUser);
 
 	return AppResponse(res, {
 		data: {

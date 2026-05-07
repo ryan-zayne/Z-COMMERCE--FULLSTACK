@@ -27,6 +27,7 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 const swaggerUiOptions = {} satisfies SwaggerUiOptions;
 
+// eslint-disable-next-line import/no-named-as-default-member
 const router = express.Router();
 
 router.use(serve, setup(swaggerSpec, swaggerUiOptions));

@@ -37,7 +37,7 @@ const signIn = catchAsync<{
 
 	if (!currentUser.isEmailVerified) {
 		// FIXME when using queues later change void to await
-		void sendVerificationEmail(currentUser as HydratedUserType);
+		void sendVerificationEmail(currentUser);
 	}
 
 	if (currentUser.isSuspended) {

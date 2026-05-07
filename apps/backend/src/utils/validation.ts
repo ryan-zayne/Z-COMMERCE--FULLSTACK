@@ -39,5 +39,5 @@ export const getValidatedValue = <TSchema extends z.ZodType>(
 		});
 	}
 
-	return result.data as z.infer<TSchema>;
+	return result.data;
 };

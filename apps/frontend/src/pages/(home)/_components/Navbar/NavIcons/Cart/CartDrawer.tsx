@@ -1,10 +1,9 @@
-import { getElementList } from "@zayne-labs/ui-react/common/for";
+import { ForWithWrapper } from "@zayne-labs/ui-react/common/for";
 import { Show } from "@zayne-labs/ui-react/common/show";
 import { Link } from "react-router";
 import { IconBox } from "@/components/common/IconBox";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Drawer, type DrawerContentProps } from "@/components/ui/drawer";
-import { useDrawer } from "@/components/ui/drawer/drawer-context";
+import { Drawer, useDrawer, type DrawerContentProps } from "@/components/ui/drawer";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { useShopStore } from "@/store/zustand/shopStore";
 import { useThemeStore } from "@/store/zustand/themeStore";
@@ -21,8 +20,6 @@ function CartDrawer(props: CartDrawerProps) {
 	const isDarkMode = useThemeStore((state) => state.isDarkMode);
 
 	const drawer = useDrawer();
-
-	const [CartItemsList] = getElementList();
 
 	return (
 		<>
@@ -67,7 +64,7 @@ function CartDrawer(props: CartDrawerProps) {
 
 					<section className="px-[13px] pt-[40px] lg:px-[20px]">
 						<Show.Root when={cart.length > 0}>
-							<CartItemsList
+							<ForWithWrapper
 								className="flex min-h-[140px] flex-col gap-[10px]"
 								each={cart}
 								renderItem={(item) => <CartItem key={item.title} product={item} />}

@@ -1,5 +1,5 @@
 import { assertDefined, type ExtractUnion } from "@zayne-labs/toolkit-type-helpers";
-import { getElementList } from "@zayne-labs/ui-react/common/for";
+import { ForWithWrapper } from "@zayne-labs/ui-react/common/for";
 import { Link, useParams } from "react-router";
 import { IconBox } from "@/components/common/IconBox";
 import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
@@ -17,8 +17,6 @@ function ProductCategoryPage() {
 		category,
 		productCategories,
 	});
-
-	const [ProductCategoryCardList] = getElementList();
 
 	if (isPending) {
 		return <LoadingSkeleton count={category === "watches" || category === "vehicles" ? 10 : 5} />;
@@ -39,7 +37,7 @@ function ProductCategoryPage() {
 			</header>
 
 			<article className="mt-[40px] px-[30px]">
-				<ProductCategoryCardList
+				<ForWithWrapper
 					className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] justify-items-center
 						gap-[50px_20px]"
 					each={productsArrayByCategory}
