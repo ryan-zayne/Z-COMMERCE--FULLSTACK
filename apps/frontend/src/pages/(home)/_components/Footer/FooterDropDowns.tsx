@@ -3,8 +3,7 @@ import { useEffect, useMemo } from "react";
 import { IconBox } from "@/components/common/IconBox";
 import { Logo } from "@/components/common/Logo";
 import { Show } from "@/components/primitives/show";
-import { DropDown } from "@/components/ui/dropdown";
-import { useDropdown } from "@/components/ui/dropdown/dropdown-context";
+import { DropDown, useDropdown } from "@/components/ui/dropdown";
 import { cnJoin } from "@/lib/utils/cn";
 import { useGlobalStore } from "@/store/zustand/globalStore";
 
