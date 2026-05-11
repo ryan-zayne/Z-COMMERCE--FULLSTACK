@@ -5,6 +5,7 @@ const corsOptions = {
 	optionsSuccessStatus: 200,
 	origin: [
 		"http://localhost:5173",
+		"http://localhost:5174",
 		"https://digital-genie.vercel.app",
 		"https://digital-genie.netlify.app",
 	],

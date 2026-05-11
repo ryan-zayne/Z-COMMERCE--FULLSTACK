@@ -48,7 +48,7 @@ function ProductCard(props: ProductCardProps) {
 		<Card.Root
 			as={m.li}
 			className={cnMerge(
-				`group/card w-[min(100%,260px)] justify-between rounded-[12px]
+				`group/card flex w-[min(100%,260px)] flex-col justify-between rounded-[12px]
 				transition-[scale,box-shadow,background-color] duration-1000 ease-in-out hover:scale-[1.03]
 				hover:shadow-[0_0_6px_0_hsl(60,100%,0%,1)] dark:hover:bg-primary
 				dark:hover:shadow-[0_0_6px_0px_var(--carousel-dot)]`,

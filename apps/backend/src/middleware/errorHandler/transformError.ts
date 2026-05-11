@@ -1,5 +1,8 @@
 import { isObject } from "@zayne-labs/toolkit-type-helpers";
-import * as jwt from "jsonwebtoken";
+
+/* eslint-disable import/default */
+import jwt from "jsonwebtoken";
+/* eslint-enable import/default */
 import { Error as MongooseError } from "mongoose";
 import { errorCodes } from "../../constants";
 import { AppError } from "../../utils";
@@ -85,11 +88,13 @@ export const transformError = (error: AppError) => {
 			break;
 		}
 
+		// eslint-disable-next-line import/no-named-as-default-member
 		case error instanceof jwt.JsonWebTokenError: {
 			modifiedError = handleJWTError(error);
 			break;
 		}
 
+		// eslint-disable-next-line import/no-named-as-default-member
 		case error instanceof jwt.TokenExpiredError: {
 			modifiedError = handleJWTExpiredError(error);
 			break;

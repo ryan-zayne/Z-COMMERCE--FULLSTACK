@@ -82,9 +82,9 @@ function Categories() {
 							<h3 className="text-center text-[18px] lg:text-[20px]">{category.title}</h3>
 
 							<Button
-								variant={"shop"}
-								className="w-full bg-body p-2 text-(--text-body) active:translate-y-[1.5px] lg:px-7
-									lg:text-[20px]"
+								variant="shop"
+								className="w-full rounded-[25px] bg-body p-2 text-(--text-body)
+									active:translate-y-[1.5px] lg:px-7 lg:text-[20px]"
 								asChild={true}
 							>
 								<Link to={category.path}>Shop Now</Link>

@@ -12,7 +12,7 @@ const removePreloader = () => {
 
 	preloaderElement.classList.add("hidden");
 
-	on(preloaderElement, "transitionend", () => preloaderElement.remove());
+	on(preloaderElement, "transitionend", () => preloaderElement.remove(), { once: true });
 };
 
 on(document, "app:ready" as never, removePreloader, { once: true });

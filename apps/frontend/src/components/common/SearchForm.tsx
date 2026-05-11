@@ -69,8 +69,8 @@ function SearchForm(props: SearchFormProps) {
 				<Button
 					type="button"
 					className={cnMerge(
-						`h-full min-w-[60px] p-0 text-[18px] transition-[color,scale] duration-300
-						hover:bg-primary hover:text-heading active:scale-[1.08]`,
+						`h-full min-w-[60px] rounded-[0_25px_25px_0] p-0 text-[18px] transition-[color,scale]
+						duration-300 hover:bg-primary hover:text-heading active:scale-[1.08]`,
 						classNames?.btn
 					)}
 					variant={variant}
@@ -82,31 +82,31 @@ function SearchForm(props: SearchFormProps) {
 
 			{type === "search" && data.length > 0 && query !== "" && (
 				<ForWithWrapper
+					as="nav"
 					className={cnMerge(
-						`absolute top-[81px] z-100 flex max-h-[500px] custom-scrollbar w-[min(100%,400px)]
-						flex-col gap-[10px] overflow-y-auto rounded-[10px] bg-body px-[20px] text-[12px]`,
+						`absolute top-[80px] z-100 flex max-h-[500px] custom-scrollbar w-[min(100%,400px)]
+						flex-col gap-2.5 overflow-y-auto rounded-[10px] bg-body px-5 text-[12px]`,
 						isMobile && "inset-x-0 mx-auto",
-						!isMobile && "top-[81px]"
+						!isMobile && "top-[80px]"
 					)}
 					each={data}
 					renderItem={(item, index) => (
-						<li key={item?.id ?? index}>
-							<Link
-								to={`/products/${item?.category}/${item?.id}`}
-								className="flex items-center rounded-[5px] p-[10px]
-									shadow-[0_1px_10px_hsl(0,0%,0%,0.6)] lg:p-[16px]"
-							>
-								<img
-									className="aspect-square w-[50px] rounded-full object-cover"
-									src={item?.images[0]}
-									width="64"
-									alt=""
-								/>
-								<div className="ml-[10px] font-medium">{item?.title}</div>
+						<Link
+							key={item?.id ?? index}
+							to={`/products/${item?.category}/${item?.id}`}
+							className="flex items-center rounded-[5px] p-[10px]
+								shadow-[0_1px_10px_hsl(0,0%,0%,0.6)] lg:p-[16px]"
+						>
+							<img
+								className="aspect-square w-[50px] rounded-full object-cover"
+								src={item?.images[0]}
+								width="64"
+								alt=""
+							/>
+							<div className="ml-[10px] font-medium">{item?.title}</div>
 
-								<div className="ml-auto font-semibold">${item?.price}</div>
-							</Link>
-						</li>
+							<div className="ml-auto font-semibold">${item?.price}</div>
+						</Link>
 					)}
 				/>
 			)}
