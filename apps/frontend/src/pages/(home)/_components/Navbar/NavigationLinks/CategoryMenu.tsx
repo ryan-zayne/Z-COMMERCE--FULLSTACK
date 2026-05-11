@@ -41,24 +41,17 @@ function CategoryMenu(props: { deviceType: "desktop" | "mobile" }) {
 	}, [deviceType, isNavShow, dropdown.onClose]);
 
 	const CategoryList = categories.map((category) => (
-		<li
+		<Link
 			key={category.title}
-			className={"max-lg:hover:text-heading"}
-			onClick={deviceType !== "desktop" ? toggleNavShow : undefined} // To close NavBar on link visit while on mobile
+			onClick={deviceType !== "desktop" ? toggleNavShow : undefined}
+			to={category.path}
+			className="flex items-center justify-between py-[10px]
+				[border-bottom:1px_solid_var(--color-primary)] max-lg:hover:text-heading"
 		>
-			<Link
-				to={category.path}
-				className={cnJoin(
-					deviceType !== "desktop"
-						&& `flex items-center justify-between py-[10px]
-						[border-bottom:1px_solid_var(--color-primary)]`
-				)}
-			>
-				<p>{category.title}</p>
+			<p>{category.title}</p>
 
-				{deviceType === "desktop" && <IconBox icon="bi:chevron-double-right" />}
-			</Link>
-		</li>
+			{deviceType === "desktop" && <IconBox icon="bi:chevron-double-right" />}
+		</Link>
 	));
 
 	const DEVICE_TYPE_LOOKUP = {

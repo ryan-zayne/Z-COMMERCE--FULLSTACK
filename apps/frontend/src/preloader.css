@@ -5,6 +5,11 @@
 	align-items: center;
 	justify-content: center;
 	background-color: hsla(0, 0%, 0%);
+	transition: opacity 2s ease;
+}
+
+#preloader.hidden {
+	opacity: 0;
 }
 
 .dank-ass-loader {

@@ -4,8 +4,8 @@
 	"version": "1.0.0",
 	"packageManager": "pnpm@10.33.3",
 	"scripts": {
-		"dev:backend": "pnpm --filter @z-commerce/backend dev",
-		"dev:frontend": "pnpm --filter @z-commerce/frontend dev",
+		"dev:backend": "pnpm --filter=@z-commerce/backend dev",
+		"dev:frontend": "pnpm --filter=@z-commerce/frontend dev",
 		"inspect:eslint-config": "pnpx @eslint/config-inspector@latest",
 		"lint:eslint": "eslint . --max-warnings 0",
 		"lint:eslint:interactive": "pnpx eslint-interactive@latest . --fix --max-warnings 0",

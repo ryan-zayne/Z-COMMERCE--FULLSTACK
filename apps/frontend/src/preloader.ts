@@ -10,12 +10,9 @@ const removePreloader = () => {
 
 	if (!preloaderElement) return;
 
-	preloaderElement.style.opacity = "0";
+	preloaderElement.classList.add("hidden");
 
-	const cleanUpForTransitionEnd = on(preloaderElement, "transitionend", () => {
-		preloaderElement.remove();
-		cleanUpForTransitionEnd();
-	});
+	on(preloaderElement, "transitionend", () => preloaderElement.remove());
 };
 
-on(document, "DOMContentLoaded", removePreloader, { once: true });
+on(document, "app:ready" as never, removePreloader, { once: true });
