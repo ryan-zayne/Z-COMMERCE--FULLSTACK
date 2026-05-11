@@ -50,7 +50,7 @@ const categories = [
 ];
 
 function Categories() {
-	const isDarkMode = useThemeStore((state) => state.isDarkMode);
+	const isDarkMode = useThemeStore((state) => state.resolvedTheme === "dark");
 
 	return (
 		<section id="Categories" className="mt-[60px] flex flex-col px-10 lg:items-center">

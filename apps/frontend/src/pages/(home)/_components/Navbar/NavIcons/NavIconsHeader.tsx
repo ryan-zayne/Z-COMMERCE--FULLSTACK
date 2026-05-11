@@ -18,7 +18,7 @@ import { HamBurgerButton } from "./HamBurgerButton";
 import { ThemeSwitchButton } from "./ThemeSwitchButton";
 
 function NavIconsHeader() {
-	const isDarkMode = useThemeStore((state) => state.isDarkMode);
+	const isDarkMode = useThemeStore((state) => state.resolvedTheme === "dark");
 	const isMobile = useGlobalStore((state) => state.isMobile);
 	const isDesktop = useGlobalStore((state) => state.isDesktop);
 	const [isSearchShow, toggleSearchShow] = useToggle(false);

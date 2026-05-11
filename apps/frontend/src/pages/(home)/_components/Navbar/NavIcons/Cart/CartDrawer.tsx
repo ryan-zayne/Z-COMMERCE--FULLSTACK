@@ -17,7 +17,7 @@ function CartDrawer(props: CartDrawerProps) {
 	const cart = useShopStore((state) => state.cart);
 	const totalPrice = useShopStore((state) => state.totalPrice);
 
-	const isDarkMode = useThemeStore((state) => state.isDarkMode);
+	const isDarkMode = useThemeStore((state) => state.resolvedTheme === "dark");
 
 	const drawer = useDrawer();
 

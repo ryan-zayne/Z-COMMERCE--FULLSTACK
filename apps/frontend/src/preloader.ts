@@ -4,9 +4,8 @@ import { useThemeStore } from "./store/zustand/themeStore";
 // NOTE - This prevents flicker of wrong theme onLoad
 useThemeStore.getState().actions.initThemeOnLoad();
 
-// NOTE - Preloader Removal
 const removePreloader = () => {
-	const preloaderElement = document.querySelector<HTMLElement>("#preloader");
+	const preloaderElement = document.querySelector("#preloader");
 
 	if (!preloaderElement) return;
 
