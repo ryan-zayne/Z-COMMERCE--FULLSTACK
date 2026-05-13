@@ -4,7 +4,7 @@ import { cnJoin } from "@/lib/utils/cn";
 import { useThemeStore } from "@/store/zustand/themeStore";
 
 function ThemeSwitchButton() {
-	const resolvedTheme = useThemeStore((state) => state.resolvedTheme);
+	const theme = useThemeStore((state) => state.theme);
 
 	const { toggleLightAndDark } = useThemeStore((state) => state.actions);
 
@@ -25,7 +25,7 @@ function ThemeSwitchButton() {
 					className={cnJoin(
 						`absolute bottom-[3.7px] aspect-square w-[15px] rounded-[50%] bg-dark-ball
 						transition-transform duration-300 ease-linear`,
-						resolvedTheme === "dark" && "translate-x-[17.5px]"
+						theme === "dark" && "translate-x-[17.5px]"
 					)}
 				/>
 			</div>

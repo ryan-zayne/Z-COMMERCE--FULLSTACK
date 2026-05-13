@@ -1,64 +1,42 @@
-import { isBrowser, pipeline } from "@zayne-labs/toolkit-core";
+import { isBrowser, on, pipeline } from "@zayne-labs/toolkit-core";
 import { createReactStore } from "@zayne-labs/toolkit-react/zustand-compat";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import type { StateCreator } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
 const SYSTEM_THEMES = defineEnum(["light", "dark"], { inferredUnionVariant: "values" });
-// NOTE - Add other themes here if needed
 const EXPLICIT_THEMES = defineEnum([...SYSTEM_THEMES], { inferredUnionVariant: "values" });
-const ALL_THEMES = defineEnum([...EXPLICIT_THEMES, "system"], { inferredUnionVariant: "values" });
 
 type SystemThemeModes = typeof SYSTEM_THEMES.$inferUnion;
-type ExplicitThemeModes = typeof EXPLICIT_THEMES.$inferUnion;
-type ThemeModes = typeof ALL_THEMES.$inferUnion;
+export type ExplicitThemeModes = typeof EXPLICIT_THEMES.$inferUnion;
+export type ThemeModes = "system" | ExplicitThemeModes;
 
 type ThemeStore = {
 	actions: {
 		getSsrThemeSyncScriptContent: () => string;
-		initThemeOnLoad: () => void;
+		initThemeOnLoad: () => (() => void) | undefined;
 		setTheme: (newTheme: ThemeModes) => void;
 		toggleLightAndDark: () => void;
 	};
-	resolvedTheme: ExplicitThemeModes;
-	systemTheme: SystemThemeModes;
-	theme: ThemeModes;
+	theme: ExplicitThemeModes;
+	userThemeIntent: ThemeModes;
 };
 
 const getSystemThemeMq = () => {
 	if (!isBrowser()) return;
-
 	return globalThis.matchMedia("(prefers-color-scheme: dark)");
 };
 
-const getPrefersDarkMode = () => Boolean(getSystemThemeMq()?.matches);
+const getSystemTheme = (): SystemThemeModes => (getSystemThemeMq()?.matches ? "dark" : "light");
 
-const resolveTheme = (ctx: Pick<ThemeStore, "systemTheme" | "theme">): ExplicitThemeModes => {
-	const { systemTheme, theme } = ctx;
-
-	return theme === "system" ? systemTheme : theme;
-};
-
-const syncResolvedThemeWithDocument = (ctx: { resolvedTheme: ExplicitThemeModes }) => {
-	const { resolvedTheme } = ctx;
-
-	document.documentElement.dataset.theme = resolvedTheme;
-
-	useThemeStore.setState({ resolvedTheme });
-};
-
-// Store Object Initialization
 const themeStoreObjectFn: StateCreator<ThemeStore> = (set, get) => ({
-	/* eslint-disable perfectionist/sort-objects -- Ignore sort here */
+	theme: getSystemTheme(),
 
-	theme: "system",
+	userThemeIntent: "system",
 
-	systemTheme: getPrefersDarkMode() ? "dark" : "light",
-
-	resolvedTheme: getPrefersDarkMode() ? "dark" : "light",
-
+	/* eslint-disable perfectionist/sort-objects */
 	actions: {
-		/* eslint-enable perfectionist/sort-objects -- Ignore sort here */
+		/* eslint-enable perfectionist/sort-objects */
 
 		getSsrThemeSyncScriptContent: () => {
 			const storageKey = useThemeStore.persist.getOptions().name;
@@ -66,17 +44,15 @@ const themeStoreObjectFn: StateCreator<ThemeStore> = (set, get) => ({
 			const script = /* js */ `
 				try {
 					const rawItem = localStorage.getItem(${JSON.stringify(storageKey)});
+					const parsed = rawItem ? JSON.parse(rawItem)?.state : null;
 
-					const theme = rawItem ? JSON.parse(rawItem)?.state?.theme ?? "system" : "system";
+					const intent = parsed?.userThemeIntent;
 
-					const validTheme = ${JSON.stringify(ALL_THEMES)}.includes(theme) ? theme : "system";
+					const theme = !intent || intent === "system"
+						? window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+						: ${JSON.stringify(EXPLICIT_THEMES)}.includes(intent) ? intent : "light";
 
-					const resolvedTheme =
-						validTheme === "system"
-							? window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
-							: validTheme;
-
-					document.documentElement.dataset.theme = resolvedTheme;
+					document.documentElement.dataset.theme = theme;
 				} catch {
 					document.documentElement.dataset.theme = "light";
 				}
@@ -88,23 +64,33 @@ const themeStoreObjectFn: StateCreator<ThemeStore> = (set, get) => ({
 		initThemeOnLoad: () => {
 			if (!isBrowser()) return;
 
-			const { systemTheme, theme } = get();
+			const mq = getSystemThemeMq();
 
-			const resolvedTheme = resolveTheme({ systemTheme, theme });
+			if (!mq) return;
 
-			syncResolvedThemeWithDocument({ resolvedTheme });
+			const cleanup = on(mq, "change", (event) => {
+				const { userThemeIntent } = get();
 
-			getSystemThemeMq()?.addEventListener("change", (event) => {
-				set({ systemTheme: event.matches ? "dark" : "light" });
+				if (userThemeIntent !== "system") return;
+
+				set({ theme: event.matches ? "dark" : "light" });
 			});
+
+			return cleanup;
 		},
 
-		setTheme: (newTheme) => set({ theme: newTheme }),
+		setTheme: (newTheme) => {
+			if (newTheme === "system") {
+				set({ theme: getSystemTheme(), userThemeIntent: "system" });
+				return;
+			}
+
+			set({ theme: newTheme, userThemeIntent: newTheme });
+		},
 
 		toggleLightAndDark: () => {
-			const { actions, resolvedTheme } = get();
-
-			actions.setTheme(resolvedTheme === "light" ? "dark" : "light");
+			const { actions, theme } = get();
+			actions.setTheme(theme === "light" ? "dark" : "light");
 		},
 	},
 });
@@ -112,22 +98,23 @@ const themeStoreObjectFn: StateCreator<ThemeStore> = (set, get) => ({
 export const useThemeStore = createReactStore(
 	pipeline(
 		themeStoreObjectFn,
-		(store) => {
-			return persist(store, {
-				migrate: (persistedState) => persistedState,
+		(store) =>
+			persist(store, {
 				name: "colorScheme",
-				partialize: ({ theme }) => ({ theme }),
-				// skipHydration: true, // NOTE - Turn on in ssr context
+				partialize: ({ theme, userThemeIntent }) => ({ theme, userThemeIntent }),
+				// skipHydration: true, // NOTE - Turn on in SSR context
 				version: 1,
-			});
-		},
+			}),
 		(store) => devtools(store)
 	)
 );
 
 useThemeStore.subscribe.withSelector(
-	({ systemTheme, theme }) => resolveTheme({ systemTheme, theme }),
-	(resolvedTheme) => {
-		syncResolvedThemeWithDocument({ resolvedTheme });
-	}
+	(state) => state.theme,
+	(theme) => {
+		if (!isBrowser()) return;
+
+		document.documentElement.dataset.theme = theme;
+	},
+	{ fireListenerImmediately: true }
 );

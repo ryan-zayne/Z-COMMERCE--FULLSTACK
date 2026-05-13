@@ -2,7 +2,7 @@ import { pipeline } from "@zayne-labs/toolkit-core";
 import { createReactStore } from "@zayne-labs/toolkit-react/zustand-compat";
 import { toast } from "sonner";
 import type { StateCreator } from "zustand";
-import { persist } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 import type { ShopStore } from "./types";
 
 const toastMessages = {
@@ -14,11 +14,10 @@ const toastMessages = {
 // Store Object creation
 const shopStateObjectFn: StateCreator<ShopStore> = (set, get) => ({
 	cart: [],
-	/* eslint-disable perfectionist/sort-objects */
+	totalPrice: 0,
 	wishList: [],
 
-	totalPrice: 0,
-
+	/* eslint-disable perfectionist/sort-objects */
 	actions: {
 		/* eslint-enable perfectionist/sort-objects */
 
@@ -81,12 +80,13 @@ const shopStateObjectFn: StateCreator<ShopStore> = (set, get) => ({
 
 		toggleAddToWishList: (productItem) => {
 			const { wishList } = get();
+
 			const isItemInWishList = wishList.some((item) => item.id === productItem.id);
 
 			const newWishList =
-				!isItemInWishList ?
-					[...wishList, productItem]
-				:	wishList.filter((item) => item.id !== productItem.id);
+				isItemInWishList ?
+					wishList.filter((item) => item.id !== productItem.id)
+				:	[...wishList, productItem];
 
 			set({ wishList: newWishList });
 		},
@@ -110,12 +110,16 @@ const shopStateObjectFn: StateCreator<ShopStore> = (set, get) => ({
 });
 
 export const useShopStore = createReactStore(
-	pipeline(shopStateObjectFn, (storeObject) =>
-		persist(storeObject, {
-			name: "shop",
-			partialize: ({ actions: _ignoredActions, ...actualState }) => actualState,
-			version: 1,
-		})
+	pipeline(
+		shopStateObjectFn,
+		(store) => {
+			return persist(store, {
+				name: "shop",
+				partialize: ({ actions: _ignoredActions, ...actualState }) => actualState,
+				version: 1,
+			});
+		},
+		(store) => devtools(store)
 	)
 );
 
