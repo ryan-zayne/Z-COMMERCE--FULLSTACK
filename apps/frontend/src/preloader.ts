@@ -2,7 +2,7 @@ import { on } from "@zayne-labs/toolkit-core";
 import { useThemeStore } from "./store/zustand/themeStore";
 
 // NOTE - This prevents flicker of wrong theme onLoad
-useThemeStore.getState().actions.initThemeOnLoad();
+void useThemeStore.getState().actions.initThemeOnLoad();
 
 const removePreloader = () => {
 	const preloaderElement = document.querySelector("#preloader");

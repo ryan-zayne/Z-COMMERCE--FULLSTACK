@@ -1,15 +1,16 @@
 #preloader {
 	position: fixed;
 	inset: 0;
+	z-index: 1000;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	background-color: hsla(0, 0%, 0%);
 	transition: opacity 2s ease;
-}
 
-#preloader.hidden {
-	opacity: 0;
+	&.hidden {
+		opacity: 0;
+	}
 }
 
 .dank-ass-loader {
@@ -17,21 +18,21 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-}
 
-.dank-ass-loader .row {
-	display: flex;
-}
+	.row {
+		display: flex;
+	}
 
-.arrow {
-	width: 0;
-	height: 0;
-	margin: 0 -6px;
-	border-left: 12px solid transparent;
-	border-right: 12px solid transparent;
-	border-bottom: 21.6px solid #fd7000;
-	animation: blink 1s infinite;
-	filter: drop-shadow(0 0 18px #fd7000);
+	.arrow {
+		width: 0;
+		height: 0;
+		margin: 0 -6px;
+		border-left: 12px solid transparent;
+		border-right: 12px solid transparent;
+		border-bottom: 21.6px solid #fd7000;
+		animation: blink 1s infinite;
+		filter: drop-shadow(0 0 18px #fd7000);
+	}
 }
 
 .arrow.down {

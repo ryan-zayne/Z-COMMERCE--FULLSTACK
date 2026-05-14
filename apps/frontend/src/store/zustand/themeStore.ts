@@ -64,28 +64,38 @@ const themeStoreObjectFn: StateCreator<ThemeStore> = (set, get) => ({
 		initThemeOnLoad: () => {
 			if (!isBrowser()) return;
 
-			const mq = getSystemThemeMq();
+			void useThemeStore.persist.rehydrate();
 
-			if (!mq) return;
+			const unsubscribeStore = useThemeStore.subscribe.withSelector(
+				(state) => state.theme,
+				(theme) => {
+					document.documentElement.dataset.theme = theme;
+				},
+				{ fireListenerImmediately: true }
+			);
 
-			const cleanup = on(mq, "change", (event) => {
+			const mediaQuery = getSystemThemeMq();
+
+			if (!mediaQuery) {
+				return unsubscribeStore;
+			}
+
+			const unsubscribeMediaQuery = on(mediaQuery, "change", (event) => {
 				const { userThemeIntent } = get();
 
-				if (userThemeIntent !== "system") return;
-
-				set({ theme: event.matches ? "dark" : "light" });
+				userThemeIntent === "system" && set({ theme: event.matches ? "dark" : "light" });
 			});
 
-			return cleanup;
+			return () => {
+				unsubscribeStore();
+				unsubscribeMediaQuery();
+			};
 		},
 
 		setTheme: (newTheme) => {
-			if (newTheme === "system") {
-				set({ theme: getSystemTheme(), userThemeIntent: "system" });
-				return;
-			}
-
-			set({ theme: newTheme, userThemeIntent: newTheme });
+			newTheme === "system" ?
+				set({ theme: getSystemTheme(), userThemeIntent: "system" })
+			:	set({ theme: newTheme, userThemeIntent: newTheme });
 		},
 
 		toggleLightAndDark: () => {
@@ -98,23 +108,21 @@ const themeStoreObjectFn: StateCreator<ThemeStore> = (set, get) => ({
 export const useThemeStore = createReactStore(
 	pipeline(
 		themeStoreObjectFn,
-		(store) =>
-			persist(store, {
+		(store) => {
+			return persist(store, {
 				name: "colorScheme",
 				partialize: ({ theme, userThemeIntent }) => ({ theme, userThemeIntent }),
-				// skipHydration: true, // NOTE - Turn on in SSR context
+				skipHydration: true, // NOTE - Turn on in SSR context
 				version: 1,
-			}),
-		(store) => devtools(store)
+			});
+		},
+		(store) => {
+			return devtools(store, {
+				anonymousActionType: "ThemeStore/anonymousAction",
+				enabled: import.meta.env.DEV,
+				name: "Theme Store — colorScheme",
+				store: "themeStore",
+			});
+		}
 	)
-);
-
-useThemeStore.subscribe.withSelector(
-	(state) => state.theme,
-	(theme) => {
-		if (!isBrowser()) return;
-
-		document.documentElement.dataset.theme = theme;
-	},
-	{ fireListenerImmediately: true }
 );
